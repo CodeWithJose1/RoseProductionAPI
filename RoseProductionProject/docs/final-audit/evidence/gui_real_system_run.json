@@ -1,0 +1,503 @@
+{
+ "description": "Final GUI workflow on the REAL system (http://127.0.0.1:7003/app/, MySQL 8.0.33 RoseProductionDB) driven in the Claude desktop app's browser pane through the GUI's own forms, buttons, filters and confirm dialogs (DOM events dispatched to the React controls). Every HTTP request issued by the GUI was recorded by wrapping window.fetch; independent verification reads used a separate fetch that is NOT part of the GUI (GET by id / list).",
+ "date": "2026-11-22",
+ "time_window_utc": "16:06:30 - 16:17:30",
+ "bundle": "/app/assets/index-CLqLDtTO.js",
+ "tag": "GUIAUDIT_160718",
+ "test_ids": {
+  "farm": 202,
+  "lot": 190,
+  "variety": 204,
+  "variety_created_through_api": 205,
+  "crop": 167,
+  "past_season": 163,
+  "future_season": 164,
+  "harvests": [
+   229,
+   230,
+   231,
+   232
+  ],
+  "forecasts": [
+   63,
+   64
+  ]
+ },
+ "baseline_before": {
+  "farms": 1,
+  "lots": 3,
+  "varieties": 7,
+  "crops": 8,
+  "seasons": 3,
+  "harvests": 20,
+  "forecasts": 8,
+  "production": {
+   "records": 20,
+   "total": 26480,
+   "average": 1324,
+   "minimum": 1000,
+   "maximum": 1600
+  }
+ },
+ "steps": [
+  {
+   "id": "GUI-01",
+   "step": "Farm create",
+   "gui_request": "POST /farms 201",
+   "independent_read": {
+    "farm_id": 202,
+    "name": "GUIAUDIT_160718_Farm",
+    "location": "GUI audit location",
+    "lot_count": 0
+   },
+   "table_row": "202 GUIAUDIT_160718_Farm GUI audit location 0",
+   "toast": "Farm created successfully",
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-02",
+   "step": "Farm edit",
+   "gui_request": "PUT /farms/202 200",
+   "independent_read": {
+    "location": "GUI audit location (edited)"
+   },
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-03",
+   "step": "Lot create (farm 202, area 1.5)",
+   "gui_request": "POST /lots 201",
+   "independent_read": {
+    "lot_id": 190,
+    "farm_id": 202,
+    "area": 1.5
+   },
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-04",
+   "step": "Lot edit (area 2.25) + farm relationship",
+   "gui_request": "PUT /lots/190 200",
+   "independent_read": {
+    "area": 2.25,
+    "farm_202_lists_lots": [
+     190
+    ]
+   },
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-05",
+   "step": "Variety create",
+   "gui_request": "POST /varieties 201",
+   "independent_read": {
+    "variety_id": 204,
+    "name": "GUIAUDIT_160718_Variety",
+    "color": "Lavender"
+   },
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-06",
+   "step": "Variety edit",
+   "gui_request": "PUT /varieties/204 200",
+   "independent_read": {
+    "color": "White"
+   },
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-07",
+   "step": "Season form validation (end 2001-05-01 before start 2001-05-10)",
+   "gui_request": "none sent",
+   "shown": "End date must be on or after the start date",
+   "dialog_stays_open": true,
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-08",
+   "step": "Season create (2001-02-01..2001-02-20) and edit (end 2001-02-28)",
+   "gui_request": "POST /seasons 201; PUT /seasons/163 200",
+   "independent_read": {
+    "season_id": 163,
+    "end_date": "2001-02-28",
+    "duration_days": 28
+   },
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-09",
+   "step": "Future season create (2097-02-01..2097-02-28)",
+   "gui_request": "POST /seasons 201",
+   "independent_read": {
+    "season_id": 164
+   },
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-10",
+   "step": "Crop create (lot 190, variety 204, planted 2001-01-15) and edit (2001-01-10)",
+   "gui_request": "POST /crops 201; PUT /crops/167 200",
+   "independent_read": {
+    "crop_id": 167,
+    "lot_id": 190,
+    "variety_id": 204,
+    "planting_date": "2001-01-10"
+   },
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-11",
+   "step": "Harvest form validation (quantity 0)",
+   "gui_request": "none sent",
+   "shown": "Quantity must be greater than zero",
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-12",
+   "step": "Harvests create 2001-02-02=1000, 2001-02-03=1200, 2001-02-04=1400",
+   "gui_request": "POST /harvests 201 x3",
+   "independent_read": [
+    [
+     229,
+     "2001-02-02",
+     1000
+    ],
+    [
+     230,
+     "2001-02-03",
+     1200
+    ],
+    [
+     231,
+     "2001-02-04",
+     1400
+    ]
+   ],
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-13",
+   "step": "Duplicate harvest same crop and day (API rule shown in the form)",
+   "gui_request": "POST /harvests 409",
+   "shown": "Crop #167 already has a harvest record on 2001-02-04 (harvest #231); edit that record instead",
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-14",
+   "step": "Harvest edit 1400 -> 1500",
+   "gui_request": "PUT /harvests/231 200",
+   "independent_read": {
+    "harvest_id": 231,
+    "quantity": 1500,
+    "crop": {
+     "lot": "GUIAUDIT_160718_Lot",
+     "variety": "GUIAUDIT_160718_Variety"
+    },
+    "season": "GUIAUDIT_160718_PastSeason"
+   },
+   "table_headers": [
+    "ID",
+    "DATE",
+    "VARIETY",
+    "LOT",
+    "CROP",
+    "SEASON",
+    "STEMS",
+    "ACTIONS"
+   ],
+   "table_row": "231 Feb 4, 2001 GUIAUDIT_160718_Variety GUIAUDIT_160718_Lot #167 GUIAUDIT_160718_PastSeason 1,500",
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-15",
+   "step": "Generate forecast with insufficient history (2001-02-03, N=3)",
+   "gui_request": "POST /forecasts/generate 400",
+   "shown": "Not enough history: the moving average needs 3 harvest record(s) of this crop before 2001-02-03, but only 1 exist.",
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-16",
+   "step": "Generate + save FUTURE forecast (season 164, 2097-02-10, N=3)",
+   "gui_request": "POST /forecasts/generate 200 (preview); POST /forecasts/generate 201 (save)",
+   "shown": {
+    "figure": "1,233.33 stems, Moving Average (3 records)",
+    "formula": "(1500 + 1200 + 1000) / 3 = 1233.33",
+    "used": [
+     "#231 2001-02-04 1,500",
+     "#230 2001-02-03 1,200",
+     "#229 2001-02-02 1,000"
+    ],
+    "badge": "Saved as forecast #63"
+   },
+   "independent_read": {
+    "forecast_id": 63,
+    "estimated_quantity": 1233.33,
+    "forecast_status": "Pending"
+   },
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-17",
+   "step": "Generate + save forecast for 2001-02-10 (season 163)",
+   "gui_request": "POST /forecasts/generate 200; POST /forecasts/generate 201",
+   "shown": {
+    "badge": "Saved as forecast #64"
+   },
+   "independent_read": {
+    "forecast_id": 64,
+    "estimated_quantity": 1233.33,
+    "forecast_status": "Pending"
+   },
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-18",
+   "step": "Register the actual harvest 2001-02-10 = 1300 and compare",
+   "gui_request": "POST /harvests 201",
+   "forecast_table_row": "64 Feb 10, 2001 ... 1,233.33 1,300 66.67 (5.13%) Evaluated Moving Average (3 records)",
+   "pending_row": "63 Feb 10, 2097 ... 1,233.33 - - Pending",
+   "summary_cards": {
+    "total": 10,
+    "evaluated": 2,
+    "pending": 8,
+    "MAE": 58.34,
+    "MAPE": 4.13
+   },
+   "screenshot": "screenshots_real_system/real_06_gui_forecast_evaluated.jpg",
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-19",
+   "step": "Harvest filters, one dimension at a time",
+   "gui_requests": [
+    "/harvests?variety_id=204",
+    "/harvests?lot_id=190",
+    "/harvests?season_id=163",
+    "/harvests?date_from=2001-02-03&date_to=2001-02-04",
+    "/harvests?date_from=2001-02-10&date_to=2001-02-10"
+   ],
+   "shown": {
+    "variety": "4 records",
+    "lot": "4 records",
+    "season": "4 records",
+    "date_range": "2 records (231, 230)",
+    "single_date": "1 record (232)"
+   },
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-20",
+   "step": "Analytics statistics for the test variety (known data 1000, 1200, 1500, 1300)",
+   "gui_request": "GET /stats/production?group_by=variety&variety_id=204 200",
+   "shown": {
+    "Total stems": "5,000",
+    "Harvest records": "4",
+    "Average per record": "1,250",
+    "Minimum": "1,000",
+    "Maximum": "1,500"
+   },
+   "expected": {
+    "total": 5000,
+    "records": 4,
+    "average": 1250,
+    "minimum": 1000,
+    "maximum": 1500
+   },
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-21",
+   "step": "Dashboard reflects the new records",
+   "shown": {
+    "Total stems": "31,480",
+    "Harvests": "24",
+    "Farms": "2",
+    "Lots": "4",
+    "Rose varieties": "8",
+    "Crops": "9",
+    "Forecasts": "10"
+   },
+   "expected": "26480 + 5000 = 31480; 20 + 4 harvests",
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-22",
+   "step": "API -> GUI consistency: variety created with a direct API request is listed by the GUI and deleted from the GUI",
+   "api_request": "POST /varieties 201 (id 205, not issued by the GUI code)",
+   "gui_row": "205 GUIAUDIT_160718_ViaAPI Yellow 0",
+   "gui_request": "DELETE /varieties/205 200",
+   "independent_read_after": 404,
+   "confirm_dialog": "Delete variety? “GUIAUDIT_160718_ViaAPI” will be permanently deleted from the database.",
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-23",
+   "step": "Referential integrity in the GUI: delete a farm that still has a lot",
+   "gui_request": "DELETE /farms/202 409",
+   "shown": "Cannot delete this farm: it is still referenced by 1 lot(s). Delete or reassign those records first.",
+   "independent_read_after": 200,
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-24",
+   "step": "Delete every test record from the GUI, children first",
+   "gui_requests": [
+    "DELETE /forecasts/63 200",
+    "DELETE /forecasts/64 200",
+    "DELETE /harvests/229 200",
+    "DELETE /harvests/230 200",
+    "DELETE /harvests/231 200",
+    "DELETE /harvests/232 200",
+    "DELETE /crops/167 200",
+    "DELETE /seasons/163 200",
+    "DELETE /seasons/164 200",
+    "DELETE /lots/190 200",
+    "DELETE /varieties/204 200",
+    "DELETE /farms/202 200"
+   ],
+   "independent_read_after_each": "404 for all 12",
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-25",
+   "step": "Only the test records were changed",
+   "writes_logged": 36,
+   "writes_outside_test_ids": 0,
+   "after": {
+    "farms": 1,
+    "lots": 3,
+    "varieties": 7,
+    "crops": 8,
+    "seasons": 3,
+    "harvests": 20,
+    "forecasts": 8,
+    "production": {
+     "records": 20,
+     "total": 26480,
+     "average": 1324,
+     "minimum": 1000,
+     "maximum": 1600
+    },
+    "forecast_status": {
+     "Evaluated": 1,
+     "Pending": 7
+    }
+   },
+   "test_rows_left": 0,
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-26",
+   "step": "Browser-side secrets",
+   "localStorage_keys": [],
+   "sessionStorage_keys": [],
+   "cookies_readable_by_js": [],
+   "read_without_session": 401,
+   "write_with_session_but_without_gui_header": 403,
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-27",
+   "step": "Forecast manual form: create, edit and delete (crop 1, season 3 'Normal Production 2026', 2026-12-30; precondition: no forecast on that crop/date)",
+   "gui_requests": [
+    "POST /forecasts 201",
+    "PUT /forecasts/65 200",
+    "DELETE /forecasts/65 200"
+   ],
+   "independent_read": {
+    "after_create": {
+     "forecast_id": 65,
+     "estimated_quantity": 1234.5,
+     "status": "Pending"
+    },
+    "after_edit": {
+     "estimated_quantity": 1300,
+     "method": "GUIAUDIT manual estimate (edited)"
+    },
+    "after_delete": 404
+   },
+   "table_row": "65 Dec 30, 2026 #1 · Freedom Normal Production 2026 1,300 — — Pending GUIAUDIT manual estimate (edited)",
+   "forecasts_after": 8,
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-28",
+   "step": "Empty state with active filters (harvests 2025-01-01..2025-01-02)",
+   "shown": "No matching records — No records match the selected filters. Change or clear the filters.",
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-29",
+   "step": "Loading state (GET /varieties delayed 1.5 s in the browser)",
+   "shown": "Loading data…",
+   "rows_after_load": 7,
+   "result": "PASS"
+  },
+  {
+   "id": "GUI-30",
+   "step": "Error state and recovery (GET /varieties made to fail in the browser, then 'Try again' with the network restored)",
+   "shown": "Could not load data — Cannot reach the server. Check that the API is running. [Try again]",
+   "after_retry": "7 records",
+   "result": "PASS"
+  }
+ ],
+ "write_log": [
+  "16:07:18 POST /farms 201",
+  "16:07:19 PUT /farms/202 200",
+  "16:07:32 POST /lots 201",
+  "16:07:32 PUT /lots/190 200",
+  "16:07:34 POST /varieties 201",
+  "16:07:34 PUT /varieties/204 200",
+  "16:07:49 POST /seasons 201",
+  "16:07:49 PUT /seasons/163 200",
+  "16:07:50 POST /seasons 201",
+  "16:07:51 POST /crops 201",
+  "16:07:52 PUT /crops/167 200",
+  "16:08:08 POST /harvests 201",
+  "16:08:10 POST /harvests 201",
+  "16:08:11 POST /harvests 201",
+  "16:08:13 POST /harvests 409",
+  "16:08:36 PUT /harvests/231 200",
+  "16:08:48 POST /forecasts/generate 400",
+  "16:08:51 POST /forecasts/generate 200",
+  "16:08:52 POST /forecasts/generate 201",
+  "16:08:55 POST /forecasts/generate 200",
+  "16:08:56 POST /forecasts/generate 201",
+  "16:09:11 POST /harvests 201",
+  "16:09:48 DELETE /varieties/205 200",
+  "16:09:50 DELETE /farms/202 409",
+  "16:10:41 DELETE /forecasts/63 200",
+  "16:10:42 DELETE /forecasts/64 200",
+  "16:10:45 DELETE /harvests/229 200",
+  "16:10:45 DELETE /harvests/230 200",
+  "16:10:46 DELETE /harvests/231 200",
+  "16:10:47 DELETE /harvests/232 200",
+  "16:10:49 DELETE /crops/167 200",
+  "16:10:50 DELETE /seasons/163 200",
+  "16:10:51 DELETE /seasons/164 200",
+  "16:10:52 DELETE /lots/190 200",
+  "16:10:54 DELETE /varieties/204 200",
+  "16:10:55 DELETE /farms/202 200",
+  "16:16:13 POST /forecasts 201",
+  "16:16:16 PUT /forecasts/65 200",
+  "16:16:16 DELETE /forecasts/65 200"
+ ],
+ "limitations": [
+  "Persistence was verified through independent API reads (each GET is a new request/session that SELECTs from MySQL; the API has no cache). A direct SQL query on the host was not issued during this GUI run because the audit shell cannot reach the host's MySQL port; direct SQL verification of the same endpoints is in audit_results.json (CRUD matrix, db_effect read with SQL).",
+  "Controls were operated by dispatching DOM events to the real React components (not OS-level mouse/keyboard input).",
+  "GUI-29 and GUI-30 simulate a slow / failed network for one endpoint inside the browser (equivalent to the browser devtools network conditions); the API itself was not stopped.",
+  "The variety created through the API in GUI-22 (id 205) was created with a direct fetch that is not part of the GUI code, so it is not in the GUI write log; its deletion through the GUI is."
+ ],
+ "final_counts_after_all_steps": {
+  "farms": 1,
+  "lots": 3,
+  "varieties": 7,
+  "crops": 8,
+  "seasons": 3,
+  "harvests": 20,
+  "forecasts": 8,
+  "total_rows": 50,
+  "total_stems": 26480
+ }
+}

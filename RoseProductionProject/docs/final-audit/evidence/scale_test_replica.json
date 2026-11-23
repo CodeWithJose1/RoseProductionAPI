@@ -1,0 +1,298 @@
+{
+ "database": "RoseProductionDB_scale (replica copy + synthetic data)",
+ "row_counts": {
+  "Farm": 1,
+  "Lot": 3,
+  "RoseVariety": 7,
+  "Crop": 58,
+  "Season": 4,
+  "Harvest": 100020,
+  "Forecast": 2007
+ },
+ "sql": {
+  "Q1 harvest history: crop + date range": {
+   "median_ms": 0.279,
+   "p95_ms": 0.423,
+   "plan": [
+    [
+     "Harvest",
+     "range",
+     "idx_harvest_crop_date",
+     5
+    ]
+   ]
+  },
+  "Q2 harvest history: date range only": {
+   "median_ms": 35.086,
+   "p95_ms": 53.93,
+   "plan": [
+    [
+     "Harvest",
+     "ALL",
+     null,
+     97527
+    ]
+   ]
+  },
+  "Q3 production statistics by variety": {
+   "median_ms": 163.523,
+   "p95_ms": 195.946,
+   "plan": [
+    [
+     "rv",
+     "ALL",
+     null,
+     7
+    ],
+    [
+     "c",
+     "ref",
+     "variety_id",
+     8
+    ],
+    [
+     "h",
+     "ref",
+     "idx_harvest_crop_date",
+     1653
+    ]
+   ]
+  },
+  "Q4 production by lot": {
+   "median_ms": 79.175,
+   "p95_ms": 84.038,
+   "plan": [
+    [
+     "l",
+     "index",
+     "PRIMARY",
+     3
+    ],
+    [
+     "c",
+     "ref",
+     "lot_id",
+     19
+    ],
+    [
+     "h",
+     "ref",
+     "idx_harvest_crop_date",
+     1653
+    ]
+   ]
+  },
+  "Q5 production by season": {
+   "median_ms": 49.221,
+   "p95_ms": 61.737,
+   "plan": [
+    [
+     "h",
+     "ALL",
+     null,
+     97527
+    ],
+    [
+     "s",
+     "eq_ref",
+     "PRIMARY",
+     1
+    ]
+   ]
+  },
+  "Q6 moving-average history (last 3 before a date)": {
+   "median_ms": 0.318,
+   "p95_ms": 0.681,
+   "plan": [
+    [
+     "Harvest",
+     "range",
+     "idx_harvest_crop_date",
+     5
+    ]
+   ]
+  },
+  "Q7 forecast status view": {
+   "median_ms": 14.203,
+   "p95_ms": 23.95,
+   "plan": [
+    [
+     "rv",
+     "ALL",
+     null,
+     7
+    ],
+    [
+     "c",
+     "ref",
+     "variety_id",
+     8
+    ],
+    [
+     "f",
+     "ref",
+     "unique_crop_forecast_date",
+     35
+    ],
+    [
+     "s",
+     "eq_ref",
+     "PRIMARY",
+     1
+    ],
+    [
+     "h",
+     "ref",
+     "idx_harvest_crop_date",
+     1
+    ]
+   ]
+  },
+  "Q8 forecast summary view": {
+   "median_ms": 8.678,
+   "p95_ms": 9.123,
+   "plan": [
+    [
+     "<derived2>",
+     "system",
+     null,
+     1
+    ],
+    [
+     "rv",
+     "index",
+     "PRIMARY",
+     7
+    ],
+    [
+     "c",
+     "ref",
+     "variety_id",
+     8
+    ],
+    [
+     "f",
+     "ref",
+     "unique_crop_forecast_date",
+     35
+    ],
+    [
+     "s",
+     "eq_ref",
+     "PRIMARY",
+     1
+    ],
+    [
+     "h",
+     "ref",
+     "idx_harvest_crop_date",
+     1
+    ]
+   ]
+  }
+ },
+ "api": {
+  "/farms": {
+   "status": 200,
+   "n": 10,
+   "min_ms": 2.338,
+   "median_ms": 2.53,
+   "p95_ms": 4.969,
+   "max_ms": 4.969
+  },
+  "/crops": {
+   "status": 200,
+   "n": 10,
+   "min_ms": 19.648,
+   "median_ms": 22.541,
+   "p95_ms": 25.988,
+   "max_ms": 25.988
+  },
+  "/seasons": {
+   "status": 200,
+   "n": 10,
+   "min_ms": 15.348,
+   "median_ms": 16.168,
+   "p95_ms": 24.093,
+   "max_ms": 24.093
+  },
+  "/stats/dashboard": {
+   "status": 200,
+   "n": 10,
+   "min_ms": 667.127,
+   "median_ms": 703.184,
+   "p95_ms": 758.944,
+   "max_ms": 758.944
+  },
+  "/stats/production?group_by=variety": {
+   "status": 200,
+   "n": 10,
+   "min_ms": 259.047,
+   "median_ms": 270.979,
+   "p95_ms": 297.615,
+   "max_ms": 297.615
+  },
+  "/stats/production?group_by=month": {
+   "status": 200,
+   "n": 10,
+   "min_ms": 244.3,
+   "median_ms": 257.885,
+   "p95_ms": 297.133,
+   "max_ms": 297.133
+  },
+  "/harvests?crop_id=60&date_from=2012-01-01&date_to=2012-03-31": {
+   "status": 200,
+   "n": 10,
+   "min_ms": 2.283,
+   "median_ms": 2.548,
+   "p95_ms": 3.382,
+   "max_ms": 3.382
+  },
+  "/harvests?variety_id=1&date_from=2012-01-01&date_to=2012-01-31": {
+   "status": 200,
+   "n": 10,
+   "min_ms": 15.513,
+   "median_ms": 16.629,
+   "p95_ms": 20.16,
+   "max_ms": 20.16
+  },
+  "/forecasts/summary": {
+   "status": 200,
+   "n": 10,
+   "min_ms": 11.24,
+   "median_ms": 12.041,
+   "p95_ms": 14.068,
+   "max_ms": 14.068
+  },
+  "/forecasts": {
+   "status": 200,
+   "n": 10,
+   "min_ms": 117.574,
+   "median_ms": 137.147,
+   "p95_ms": 175.997,
+   "max_ms": 175.997
+  },
+  "/harvests": {
+   "status": 200,
+   "n": 10,
+   "min_ms": 2763.46,
+   "median_ms": 3008.712,
+   "p95_ms": 3353.183,
+   "max_ms": 3353.183
+  },
+  "POST /forecasts/generate (preview)": {
+   "status": 200,
+   "n": 10,
+   "min_ms": 6.403,
+   "median_ms": 8.331,
+   "p95_ms": 10.768,
+   "max_ms": 10.768
+  }
+ },
+ "GET /harvests full list": {
+  "status": 200,
+  "ms": 3116.3,
+  "bytes": 25343246,
+  "records": 100020
+ }
+}

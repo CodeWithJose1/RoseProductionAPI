@@ -1,0 +1,16 @@
+{
+ "axe": "4.14.1",
+ "results": {
+  "login": [],
+  "dashboard": [],
+  "analytics": [],
+  "farms": [],
+  "lots": [],
+  "varieties": [],
+  "crops": [],
+  "seasons": [],
+  "harvests": [],
+  "forecasts": [],
+  "harvest-form-with-errors": []
+ }
+}

@@ -1,0 +1,1 @@
+Mysqlcontainer | mysql:8.0.33 | Up 2 hours | 0.0.0.0:3306->3306/tcp, [::]:3306->3306/tcp, 33060/tcp

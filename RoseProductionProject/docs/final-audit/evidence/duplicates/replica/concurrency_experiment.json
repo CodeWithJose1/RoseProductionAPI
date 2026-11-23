@@ -1,0 +1,195 @@
+{
+ "locks_enabled": {
+  "farm": {
+   "rows_created_per_round": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "responses": {
+    "409 DUPLICATE_RECORD": 35,
+    "201": 5
+   }
+  },
+  "lot": {
+   "rows_created_per_round": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "responses": {
+    "409 DUPLICATE_RECORD": 35,
+    "201": 5
+   }
+  },
+  "variety": {
+   "rows_created_per_round": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "responses": {
+    "409 DUPLICATE_RECORD": 35,
+    "201": 5
+   }
+  },
+  "crop": {
+   "rows_created_per_round": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "responses": {
+    "409 DUPLICATE_RECORD": 35,
+    "201": 5
+   }
+  },
+  "season": {
+   "rows_created_per_round": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "responses": {
+    "201": 5,
+    "409 DUPLICATE_RECORD": 35
+   }
+  },
+  "harvest": {
+   "rows_created_per_round": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "responses": {
+    "409 DUPLICATE_RECORD": 35,
+    "201": 5
+   }
+  },
+  "forecast": {
+   "rows_created_per_round": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "responses": {
+    "409 DUPLICATE_RECORD": 35,
+    "201": 5
+   }
+  }
+ },
+ "locks_disabled": {
+  "farm": {
+   "rows_created_per_round": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "responses": {
+    "409 CONCURRENT_UPDATE": 16,
+    "409 DUPLICATE_RECORD": 19,
+    "201": 5
+   }
+  },
+  "lot": {
+   "rows_created_per_round": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "responses": {
+    "409 DUPLICATE_RECORD": 24,
+    "201": 5,
+    "409 CONCURRENT_UPDATE": 11
+   }
+  },
+  "variety": {
+   "rows_created_per_round": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "responses": {
+    "409 CONCURRENT_UPDATE": 13,
+    "409 DUPLICATE_RECORD": 22,
+    "201": 5
+   }
+  },
+  "crop": {
+   "rows_created_per_round": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "responses": {
+    "409 CONCURRENT_UPDATE": 9,
+    "409 DUPLICATE_RECORD": 26,
+    "201": 5
+   }
+  },
+  "season": {
+   "rows_created_per_round": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "responses": {
+    "409 CONCURRENT_UPDATE": 21,
+    "201": 5,
+    "409 DUPLICATE_RECORD": 14
+   }
+  },
+  "harvest": {
+   "rows_created_per_round": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "responses": {
+    "409 DUPLICATE_RECORD": 25,
+    "201": 5,
+    "409 CONCURRENT_UPDATE": 10
+   }
+  },
+  "forecast": {
+   "rows_created_per_round": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "responses": {
+    "409 CONCURRENT_UPDATE": 6,
+    "409 DUPLICATE_RECORD": 29,
+    "201": 5
+   }
+  }
+ }
+}

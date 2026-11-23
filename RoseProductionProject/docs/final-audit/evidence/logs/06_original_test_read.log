@@ -1,0 +1,26 @@
+
+=== DATABASE READ TEST ===
+Farm: 1 records
+Lot: 3 records
+RoseVariety: 7 records
+Crop: 8 records
+Season: 3 records
+Harvest: 20 records
+Forecast: 8 records
+
+=== FARMS ===
+ID: 1
+Name: Rose Paradise Farm
+Location: Cayambe, Pichincha, Ecuador
+
+=== CROPS ===
+Crop 1 | Variety: Freedom | Lot: Lot A | Planting date: 2026-01-10
+Crop 2 | Variety: Mondial | Lot: Lot A | Planting date: 2026-01-15
+Crop 3 | Variety: Pink Floyd | Lot: Lot B | Planting date: 2026-02-01
+Crop 4 | Variety: Vendela | Lot: Lot B | Planting date: 2026-02-05
+Crop 5 | Variety: Explorer | Lot: Lot C | Planting date: 2026-02-10
+Crop 6 | Variety: Freedom | Lot: Lot C | Planting date: 2026-02-15
+Crop 7 | Variety: Quicksand | Lot: Lot C | Planting date: 2026-11-15
+Crop 8 | Variety: Quicksand | Lot: Lot C | Planting date: 2026-11-15
+
+Read test completed successfully.

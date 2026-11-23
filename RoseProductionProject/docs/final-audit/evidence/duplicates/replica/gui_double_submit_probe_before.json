@@ -1,0 +1,10 @@
+{
+ "description": "Probe of the GUI BEFORE the fix (bundle index-CLqLDtTO.js, API 1.1.0) on the cloud replica, 2026-11-23 12:15 -05:00, Playwright Chromium: how many POST /varieties each action sends and how many rows are created. Script: dblclick_probe.cjs (copy in this folder).",
+ "dblclick_posts": 1,
+ "enter_twice_posts": 1,
+ "same_task_two_clicks_posts": 2,
+ "same_task_two_submits_posts": 2,
+ "rows_created": [[704, "DBLPROBE_1795454096698_dbl"], [705, "DBLPROBE_1795454096698_enter"], [706, "DBLPROBE_1795454096698_sync"], [707, "DBLPROBE_1795454096698_sync"], [708, "DBLPROBE_1795454096698_req"], [709, "DBLPROBE_1795454096698_req"]],
+ "varieties_after_cleanup": 7,
+ "interpretation": "A normal double click or a double Enter sent one request (React disabled the button before the second event). Two activations processed before React re-rendered (same task) sent two requests, and the API stored both rows (706/707 and 708/709 are identical): the form had no synchronous lock and the API had no uniqueness check."
+}

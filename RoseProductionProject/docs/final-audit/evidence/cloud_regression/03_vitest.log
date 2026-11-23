@@ -1,0 +1,23 @@
+
+ RUN  v5.1.1 /home/claude/rose/frontend
+
+ ✓ src/__tests__/crud.test.jsx (11 tests) 2128ms
+   ✓ rose variety CRUD (2)
+     ✓ creates, edits and deletes a variety through the API 683ms
+ ✓ src/__tests__/app.test.jsx (17 tests) 1464ms
+   ✓ authentication (5)
+     ✓ shows the login screen when not signed in and signs in 316ms
+ ✓ src/__tests__/components.test.jsx (11 tests) 595ms
+ ✓ src/__tests__/client.test.js (13 tests) 16ms
+ ✓ src/__tests__/utils.test.js (8 tests) 8ms
+
+ Test Files  5 passed (5)
+      Tests  60 passed (60)
+   Start at  11:03:05
+   Duration  9.18s (tests 49%, environment 29%, import 14%, setup 6%, transform 2%)
+
+Environment  jsdom was created 5 times · 2.51s total, 29% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+JSON report written to /home/claude/rose/docs/final-audit/evidence/cloud_regression/vitest.json

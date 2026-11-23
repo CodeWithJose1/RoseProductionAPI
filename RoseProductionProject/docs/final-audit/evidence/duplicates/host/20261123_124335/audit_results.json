@@ -1,0 +1,4367 @@
+{
+  "run_id": "fbe818b0",
+  "started_at": "2026-11-23T12:44:02.628028-05:00",
+  "base_url": "http://127.0.0.1:7004",
+  "sections": {
+    "environment": {
+      "python": "3.14.8",
+      "platform": "Linux-7.3.4-202.nobara.fc44.x86_64-x86_64-with-glibc2.43",
+      "flask": "3.1.3",
+      "flask_sqlalchemy": "3.1.1",
+      "sqlalchemy": "2.1.9",
+      "pymysql": "2.2.8",
+      "mysql_version": "8.0.33",
+      "database": "RoseProductionDB",
+      "sql_mode": "ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION",
+      "audit_date": "2026-11-23",
+      "docker": {
+        "image": "mysql:8.0.33",
+        "state": "running",
+        "port_bindings": {
+          "3306/tcp": [
+            {
+              "HostIp": "",
+              "HostPort": "3306"
+            }
+          ]
+        },
+        "mounts": [
+          {
+            "Type": "bind",
+            "Name": null,
+            "Source": "/home/jose/Documentos/DockerMySQL/Mysql-data",
+            "Destination": "/var/lib/mysql"
+          }
+        ],
+        "restart_policy": {
+          "Name": "no",
+          "MaximumRetryCount": 0
+        }
+      },
+      "api_home": {
+        "status": 200,
+        "body": {
+          "message": "Rose Production API is running",
+          "database": "RoseProductionDB",
+          "gui": "/app/",
+          "version": "1.2.0"
+        },
+        "ms": 8.7
+      }
+    },
+    "schema": {
+      "tables": [
+        {
+          "TABLE_NAME": "Crop",
+          "TABLE_TYPE": "BASE TABLE",
+          "ENGINE": "InnoDB",
+          "TABLE_COLLATION": "utf8mb4_unicode_ci",
+          "TABLE_ROWS": 19
+        },
+        {
+          "TABLE_NAME": "Farm",
+          "TABLE_TYPE": "BASE TABLE",
+          "ENGINE": "InnoDB",
+          "TABLE_COLLATION": "utf8mb4_unicode_ci",
+          "TABLE_ROWS": 14
+        },
+        {
+          "TABLE_NAME": "Forecast",
+          "TABLE_TYPE": "BASE TABLE",
+          "ENGINE": "InnoDB",
+          "TABLE_COLLATION": "utf8mb4_unicode_ci",
+          "TABLE_ROWS": 10
+        },
+        {
+          "TABLE_NAME": "Harvest",
+          "TABLE_TYPE": "BASE TABLE",
+          "ENGINE": "InnoDB",
+          "TABLE_COLLATION": "utf8mb4_unicode_ci",
+          "TABLE_ROWS": 26
+        },
+        {
+          "TABLE_NAME": "Lot",
+          "TABLE_TYPE": "BASE TABLE",
+          "ENGINE": "InnoDB",
+          "TABLE_COLLATION": "utf8mb4_unicode_ci",
+          "TABLE_ROWS": 16
+        },
+        {
+          "TABLE_NAME": "RoseVariety",
+          "TABLE_TYPE": "BASE TABLE",
+          "ENGINE": "InnoDB",
+          "TABLE_COLLATION": "utf8mb4_unicode_ci",
+          "TABLE_ROWS": 17
+        },
+        {
+          "TABLE_NAME": "Season",
+          "TABLE_TYPE": "BASE TABLE",
+          "ENGINE": "InnoDB",
+          "TABLE_COLLATION": "utf8mb4_unicode_ci",
+          "TABLE_ROWS": 15
+        },
+        {
+          "TABLE_NAME": "vw_forecast_status",
+          "TABLE_TYPE": "VIEW",
+          "ENGINE": null,
+          "TABLE_COLLATION": null,
+          "TABLE_ROWS": null
+        },
+        {
+          "TABLE_NAME": "vw_forecast_summary",
+          "TABLE_TYPE": "VIEW",
+          "ENGINE": null,
+          "TABLE_COLLATION": null,
+          "TABLE_ROWS": null
+        }
+      ],
+      "columns": [
+        {
+          "TABLE_NAME": "Crop",
+          "COLUMN_NAME": "crop_id",
+          "COLUMN_TYPE": "int",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "PRI",
+          "EXTRA": "auto_increment"
+        },
+        {
+          "TABLE_NAME": "Crop",
+          "COLUMN_NAME": "lot_id",
+          "COLUMN_TYPE": "int",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "MUL",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "Crop",
+          "COLUMN_NAME": "variety_id",
+          "COLUMN_TYPE": "int",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "MUL",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "Crop",
+          "COLUMN_NAME": "planting_date",
+          "COLUMN_TYPE": "date",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "Farm",
+          "COLUMN_NAME": "farm_id",
+          "COLUMN_TYPE": "int",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "PRI",
+          "EXTRA": "auto_increment"
+        },
+        {
+          "TABLE_NAME": "Farm",
+          "COLUMN_NAME": "name",
+          "COLUMN_TYPE": "varchar(100)",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "MUL",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "Farm",
+          "COLUMN_NAME": "location",
+          "COLUMN_TYPE": "varchar(150)",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "Forecast",
+          "COLUMN_NAME": "forecast_id",
+          "COLUMN_TYPE": "int",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "PRI",
+          "EXTRA": "auto_increment"
+        },
+        {
+          "TABLE_NAME": "Forecast",
+          "COLUMN_NAME": "crop_id",
+          "COLUMN_TYPE": "int",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "MUL",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "Forecast",
+          "COLUMN_NAME": "season_id",
+          "COLUMN_TYPE": "int",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "MUL",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "Forecast",
+          "COLUMN_NAME": "forecast_date",
+          "COLUMN_TYPE": "date",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "Forecast",
+          "COLUMN_NAME": "estimated_quantity",
+          "COLUMN_TYPE": "decimal(12,2)",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "Forecast",
+          "COLUMN_NAME": "method",
+          "COLUMN_TYPE": "varchar(100)",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "Harvest",
+          "COLUMN_NAME": "harvest_id",
+          "COLUMN_TYPE": "int",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "PRI",
+          "EXTRA": "auto_increment"
+        },
+        {
+          "TABLE_NAME": "Harvest",
+          "COLUMN_NAME": "crop_id",
+          "COLUMN_TYPE": "int",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "MUL",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "Harvest",
+          "COLUMN_NAME": "season_id",
+          "COLUMN_TYPE": "int",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "MUL",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "Harvest",
+          "COLUMN_NAME": "harvest_date",
+          "COLUMN_TYPE": "date",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "Harvest",
+          "COLUMN_NAME": "quantity",
+          "COLUMN_TYPE": "int",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "Lot",
+          "COLUMN_NAME": "lot_id",
+          "COLUMN_TYPE": "int",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "PRI",
+          "EXTRA": "auto_increment"
+        },
+        {
+          "TABLE_NAME": "Lot",
+          "COLUMN_NAME": "farm_id",
+          "COLUMN_TYPE": "int",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "MUL",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "Lot",
+          "COLUMN_NAME": "name",
+          "COLUMN_TYPE": "varchar(100)",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "Lot",
+          "COLUMN_NAME": "area",
+          "COLUMN_TYPE": "decimal(10,2)",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "RoseVariety",
+          "COLUMN_NAME": "variety_id",
+          "COLUMN_TYPE": "int",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "PRI",
+          "EXTRA": "auto_increment"
+        },
+        {
+          "TABLE_NAME": "RoseVariety",
+          "COLUMN_NAME": "name",
+          "COLUMN_TYPE": "varchar(100)",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "RoseVariety",
+          "COLUMN_NAME": "color",
+          "COLUMN_TYPE": "varchar(50)",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "Season",
+          "COLUMN_NAME": "season_id",
+          "COLUMN_TYPE": "int",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "PRI",
+          "EXTRA": "auto_increment"
+        },
+        {
+          "TABLE_NAME": "Season",
+          "COLUMN_NAME": "name",
+          "COLUMN_TYPE": "varchar(100)",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "MUL",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "Season",
+          "COLUMN_NAME": "start_date",
+          "COLUMN_TYPE": "date",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "",
+          "EXTRA": ""
+        },
+        {
+          "TABLE_NAME": "Season",
+          "COLUMN_NAME": "end_date",
+          "COLUMN_TYPE": "date",
+          "IS_NULLABLE": "NO",
+          "COLUMN_KEY": "",
+          "EXTRA": ""
+        }
+      ],
+      "constraints": [
+        {
+          "TABLE_NAME": "Crop",
+          "CONSTRAINT_NAME": "Crop_ibfk_1",
+          "CONSTRAINT_TYPE": "FOREIGN KEY",
+          "CHECK_CLAUSE": null,
+          "UPDATE_RULE": "NO ACTION",
+          "DELETE_RULE": "NO ACTION",
+          "REFERENCED_TABLE_NAME": "Lot"
+        },
+        {
+          "TABLE_NAME": "Crop",
+          "CONSTRAINT_NAME": "Crop_ibfk_2",
+          "CONSTRAINT_TYPE": "FOREIGN KEY",
+          "CHECK_CLAUSE": null,
+          "UPDATE_RULE": "NO ACTION",
+          "DELETE_RULE": "NO ACTION",
+          "REFERENCED_TABLE_NAME": "RoseVariety"
+        },
+        {
+          "TABLE_NAME": "Crop",
+          "CONSTRAINT_NAME": "PRIMARY",
+          "CONSTRAINT_TYPE": "PRIMARY KEY",
+          "CHECK_CLAUSE": null,
+          "UPDATE_RULE": null,
+          "DELETE_RULE": null,
+          "REFERENCED_TABLE_NAME": null
+        },
+        {
+          "TABLE_NAME": "Farm",
+          "CONSTRAINT_NAME": "PRIMARY",
+          "CONSTRAINT_TYPE": "PRIMARY KEY",
+          "CHECK_CLAUSE": null,
+          "UPDATE_RULE": null,
+          "DELETE_RULE": null,
+          "REFERENCED_TABLE_NAME": null
+        },
+        {
+          "TABLE_NAME": "Farm",
+          "CONSTRAINT_NAME": "unique_farm_name_location",
+          "CONSTRAINT_TYPE": "UNIQUE",
+          "CHECK_CLAUSE": null,
+          "UPDATE_RULE": null,
+          "DELETE_RULE": null,
+          "REFERENCED_TABLE_NAME": null
+        },
+        {
+          "TABLE_NAME": "Forecast",
+          "CONSTRAINT_NAME": "Forecast_chk_1",
+          "CONSTRAINT_TYPE": "CHECK",
+          "CHECK_CLAUSE": "(`estimated_quantity` >= 0)",
+          "UPDATE_RULE": null,
+          "DELETE_RULE": null,
+          "REFERENCED_TABLE_NAME": null
+        },
+        {
+          "TABLE_NAME": "Forecast",
+          "CONSTRAINT_NAME": "Forecast_ibfk_1",
+          "CONSTRAINT_TYPE": "FOREIGN KEY",
+          "CHECK_CLAUSE": null,
+          "UPDATE_RULE": "NO ACTION",
+          "DELETE_RULE": "NO ACTION",
+          "REFERENCED_TABLE_NAME": "Crop"
+        },
+        {
+          "TABLE_NAME": "Forecast",
+          "CONSTRAINT_NAME": "Forecast_ibfk_2",
+          "CONSTRAINT_TYPE": "FOREIGN KEY",
+          "CHECK_CLAUSE": null,
+          "UPDATE_RULE": "NO ACTION",
+          "DELETE_RULE": "NO ACTION",
+          "REFERENCED_TABLE_NAME": "Season"
+        },
+        {
+          "TABLE_NAME": "Forecast",
+          "CONSTRAINT_NAME": "PRIMARY",
+          "CONSTRAINT_TYPE": "PRIMARY KEY",
+          "CHECK_CLAUSE": null,
+          "UPDATE_RULE": null,
+          "DELETE_RULE": null,
+          "REFERENCED_TABLE_NAME": null
+        },
+        {
+          "TABLE_NAME": "Forecast",
+          "CONSTRAINT_NAME": "unique_crop_forecast_date",
+          "CONSTRAINT_TYPE": "UNIQUE",
+          "CHECK_CLAUSE": null,
+          "UPDATE_RULE": null,
+          "DELETE_RULE": null,
+          "REFERENCED_TABLE_NAME": null
+        },
+        {
+          "TABLE_NAME": "Harvest",
+          "CONSTRAINT_NAME": "Harvest_chk_1",
+          "CONSTRAINT_TYPE": "CHECK",
+          "CHECK_CLAUSE": "(`quantity` > 0)",
+          "UPDATE_RULE": null,
+          "DELETE_RULE": null,
+          "REFERENCED_TABLE_NAME": null
+        },
+        {
+          "TABLE_NAME": "Harvest",
+          "CONSTRAINT_NAME": "Harvest_ibfk_1",
+          "CONSTRAINT_TYPE": "FOREIGN KEY",
+          "CHECK_CLAUSE": null,
+          "UPDATE_RULE": "NO ACTION",
+          "DELETE_RULE": "NO ACTION",
+          "REFERENCED_TABLE_NAME": "Crop"
+        },
+        {
+          "TABLE_NAME": "Harvest",
+          "CONSTRAINT_NAME": "Harvest_ibfk_2",
+          "CONSTRAINT_TYPE": "FOREIGN KEY",
+          "CHECK_CLAUSE": null,
+          "UPDATE_RULE": "NO ACTION",
+          "DELETE_RULE": "NO ACTION",
+          "REFERENCED_TABLE_NAME": "Season"
+        },
+        {
+          "TABLE_NAME": "Harvest",
+          "CONSTRAINT_NAME": "PRIMARY",
+          "CONSTRAINT_TYPE": "PRIMARY KEY",
+          "CHECK_CLAUSE": null,
+          "UPDATE_RULE": null,
+          "DELETE_RULE": null,
+          "REFERENCED_TABLE_NAME": null
+        },
+        {
+          "TABLE_NAME": "Harvest",
+          "CONSTRAINT_NAME": "unique_harvest_crop_date",
+          "CONSTRAINT_TYPE": "UNIQUE",
+          "CHECK_CLAUSE": null,
+          "UPDATE_RULE": null,
+          "DELETE_RULE": null,
+          "REFERENCED_TABLE_NAME": null
+        },
+        {
+          "TABLE_NAME": "Lot",
+          "CONSTRAINT_NAME": "Lot_ibfk_1",
+          "CONSTRAINT_TYPE": "FOREIGN KEY",
+          "CHECK_CLAUSE": null,
+          "UPDATE_RULE": "NO ACTION",
+          "DELETE_RULE": "NO ACTION",
+          "REFERENCED_TABLE_NAME": "Farm"
+        },
+        {
+          "TABLE_NAME": "Lot",
+          "CONSTRAINT_NAME": "PRIMARY",
+          "CONSTRAINT_TYPE": "PRIMARY KEY",
+          "CHECK_CLAUSE": null,
+          "UPDATE_RULE": null,
+          "DELETE_RULE": null,
+          "REFERENCED_TABLE_NAME": null
+        },
+        {
+          "TABLE_NAME": "Lot",
+          "CONSTRAINT_NAME": "unique_lot_farm_name",
+          "CONSTRAINT_TYPE": "UNIQUE",
+          "CHECK_CLAUSE": null,
+          "UPDATE_RULE": null,
+          "DELETE_RULE": null,
+          "REFERENCED_TABLE_NAME": null
+        },
+        {
+          "TABLE_NAME": "RoseVariety",
+          "CONSTRAINT_NAME": "PRIMARY",
+          "CONSTRAINT_TYPE": "PRIMARY KEY",
+          "CHECK_CLAUSE": null,
+          "UPDATE_RULE": null,
+          "DELETE_RULE": null,
+          "REFERENCED_TABLE_NAME": null
+        },
+        {
+          "TABLE_NAME": "Season",
+          "CONSTRAINT_NAME": "Season_chk_1",
+          "CONSTRAINT_TYPE": "CHECK",
+          "CHECK_CLAUSE": "(`end_date` >= `start_date`)",
+          "UPDATE_RULE": null,
+          "DELETE_RULE": null,
+          "REFERENCED_TABLE_NAME": null
+        },
+        {
+          "TABLE_NAME": "Season",
+          "CONSTRAINT_NAME": "PRIMARY",
+          "CONSTRAINT_TYPE": "PRIMARY KEY",
+          "CHECK_CLAUSE": null,
+          "UPDATE_RULE": null,
+          "DELETE_RULE": null,
+          "REFERENCED_TABLE_NAME": null
+        },
+        {
+          "TABLE_NAME": "Season",
+          "CONSTRAINT_NAME": "unique_season_name_dates",
+          "CONSTRAINT_TYPE": "UNIQUE",
+          "CHECK_CLAUSE": null,
+          "UPDATE_RULE": null,
+          "DELETE_RULE": null,
+          "REFERENCED_TABLE_NAME": null
+        }
+      ],
+      "foreign_keys": [
+        {
+          "TABLE_NAME": "Crop",
+          "COLUMN_NAME": "lot_id",
+          "CONSTRAINT_NAME": "Crop_ibfk_1",
+          "REFERENCED_TABLE_NAME": "Lot",
+          "REFERENCED_COLUMN_NAME": "lot_id"
+        },
+        {
+          "TABLE_NAME": "Crop",
+          "COLUMN_NAME": "variety_id",
+          "CONSTRAINT_NAME": "Crop_ibfk_2",
+          "REFERENCED_TABLE_NAME": "RoseVariety",
+          "REFERENCED_COLUMN_NAME": "variety_id"
+        },
+        {
+          "TABLE_NAME": "Forecast",
+          "COLUMN_NAME": "crop_id",
+          "CONSTRAINT_NAME": "Forecast_ibfk_1",
+          "REFERENCED_TABLE_NAME": "Crop",
+          "REFERENCED_COLUMN_NAME": "crop_id"
+        },
+        {
+          "TABLE_NAME": "Forecast",
+          "COLUMN_NAME": "season_id",
+          "CONSTRAINT_NAME": "Forecast_ibfk_2",
+          "REFERENCED_TABLE_NAME": "Season",
+          "REFERENCED_COLUMN_NAME": "season_id"
+        },
+        {
+          "TABLE_NAME": "Harvest",
+          "COLUMN_NAME": "crop_id",
+          "CONSTRAINT_NAME": "Harvest_ibfk_1",
+          "REFERENCED_TABLE_NAME": "Crop",
+          "REFERENCED_COLUMN_NAME": "crop_id"
+        },
+        {
+          "TABLE_NAME": "Harvest",
+          "COLUMN_NAME": "season_id",
+          "CONSTRAINT_NAME": "Harvest_ibfk_2",
+          "REFERENCED_TABLE_NAME": "Season",
+          "REFERENCED_COLUMN_NAME": "season_id"
+        },
+        {
+          "TABLE_NAME": "Lot",
+          "COLUMN_NAME": "farm_id",
+          "CONSTRAINT_NAME": "Lot_ibfk_1",
+          "REFERENCED_TABLE_NAME": "Farm",
+          "REFERENCED_COLUMN_NAME": "farm_id"
+        }
+      ],
+      "indexes": [
+        {
+          "TABLE_NAME": "Crop",
+          "INDEX_NAME": "lot_id",
+          "NON_UNIQUE": 1,
+          "SEQ_IN_INDEX": 1,
+          "COLUMN_NAME": "lot_id"
+        },
+        {
+          "TABLE_NAME": "Crop",
+          "INDEX_NAME": "PRIMARY",
+          "NON_UNIQUE": 0,
+          "SEQ_IN_INDEX": 1,
+          "COLUMN_NAME": "crop_id"
+        },
+        {
+          "TABLE_NAME": "Crop",
+          "INDEX_NAME": "variety_id",
+          "NON_UNIQUE": 1,
+          "SEQ_IN_INDEX": 1,
+          "COLUMN_NAME": "variety_id"
+        },
+        {
+          "TABLE_NAME": "Farm",
+          "INDEX_NAME": "PRIMARY",
+          "NON_UNIQUE": 0,
+          "SEQ_IN_INDEX": 1,
+          "COLUMN_NAME": "farm_id"
+        },
+        {
+          "TABLE_NAME": "Farm",
+          "INDEX_NAME": "unique_farm_name_location",
+          "NON_UNIQUE": 0,
+          "SEQ_IN_INDEX": 1,
+          "COLUMN_NAME": "name"
+        },
+        {
+          "TABLE_NAME": "Farm",
+          "INDEX_NAME": "unique_farm_name_location",
+          "NON_UNIQUE": 0,
+          "SEQ_IN_INDEX": 2,
+          "COLUMN_NAME": "location"
+        },
+        {
+          "TABLE_NAME": "Forecast",
+          "INDEX_NAME": "PRIMARY",
+          "NON_UNIQUE": 0,
+          "SEQ_IN_INDEX": 1,
+          "COLUMN_NAME": "forecast_id"
+        },
+        {
+          "TABLE_NAME": "Forecast",
+          "INDEX_NAME": "season_id",
+          "NON_UNIQUE": 1,
+          "SEQ_IN_INDEX": 1,
+          "COLUMN_NAME": "season_id"
+        },
+        {
+          "TABLE_NAME": "Forecast",
+          "INDEX_NAME": "unique_crop_forecast_date",
+          "NON_UNIQUE": 0,
+          "SEQ_IN_INDEX": 1,
+          "COLUMN_NAME": "crop_id"
+        },
+        {
+          "TABLE_NAME": "Forecast",
+          "INDEX_NAME": "unique_crop_forecast_date",
+          "NON_UNIQUE": 0,
+          "SEQ_IN_INDEX": 2,
+          "COLUMN_NAME": "forecast_date"
+        },
+        {
+          "TABLE_NAME": "Harvest",
+          "INDEX_NAME": "idx_harvest_crop_date",
+          "NON_UNIQUE": 1,
+          "SEQ_IN_INDEX": 1,
+          "COLUMN_NAME": "crop_id"
+        },
+        {
+          "TABLE_NAME": "Harvest",
+          "INDEX_NAME": "idx_harvest_crop_date",
+          "NON_UNIQUE": 1,
+          "SEQ_IN_INDEX": 2,
+          "COLUMN_NAME": "harvest_date"
+        },
+        {
+          "TABLE_NAME": "Harvest",
+          "INDEX_NAME": "PRIMARY",
+          "NON_UNIQUE": 0,
+          "SEQ_IN_INDEX": 1,
+          "COLUMN_NAME": "harvest_id"
+        },
+        {
+          "TABLE_NAME": "Harvest",
+          "INDEX_NAME": "season_id",
+          "NON_UNIQUE": 1,
+          "SEQ_IN_INDEX": 1,
+          "COLUMN_NAME": "season_id"
+        },
+        {
+          "TABLE_NAME": "Harvest",
+          "INDEX_NAME": "unique_harvest_crop_date",
+          "NON_UNIQUE": 0,
+          "SEQ_IN_INDEX": 1,
+          "COLUMN_NAME": "crop_id"
+        },
+        {
+          "TABLE_NAME": "Harvest",
+          "INDEX_NAME": "unique_harvest_crop_date",
+          "NON_UNIQUE": 0,
+          "SEQ_IN_INDEX": 2,
+          "COLUMN_NAME": "harvest_date"
+        },
+        {
+          "TABLE_NAME": "Lot",
+          "INDEX_NAME": "PRIMARY",
+          "NON_UNIQUE": 0,
+          "SEQ_IN_INDEX": 1,
+          "COLUMN_NAME": "lot_id"
+        },
+        {
+          "TABLE_NAME": "Lot",
+          "INDEX_NAME": "unique_lot_farm_name",
+          "NON_UNIQUE": 0,
+          "SEQ_IN_INDEX": 1,
+          "COLUMN_NAME": "farm_id"
+        },
+        {
+          "TABLE_NAME": "Lot",
+          "INDEX_NAME": "unique_lot_farm_name",
+          "NON_UNIQUE": 0,
+          "SEQ_IN_INDEX": 2,
+          "COLUMN_NAME": "name"
+        },
+        {
+          "TABLE_NAME": "RoseVariety",
+          "INDEX_NAME": "PRIMARY",
+          "NON_UNIQUE": 0,
+          "SEQ_IN_INDEX": 1,
+          "COLUMN_NAME": "variety_id"
+        },
+        {
+          "TABLE_NAME": "Season",
+          "INDEX_NAME": "PRIMARY",
+          "NON_UNIQUE": 0,
+          "SEQ_IN_INDEX": 1,
+          "COLUMN_NAME": "season_id"
+        },
+        {
+          "TABLE_NAME": "Season",
+          "INDEX_NAME": "unique_season_name_dates",
+          "NON_UNIQUE": 0,
+          "SEQ_IN_INDEX": 1,
+          "COLUMN_NAME": "name"
+        },
+        {
+          "TABLE_NAME": "Season",
+          "INDEX_NAME": "unique_season_name_dates",
+          "NON_UNIQUE": 0,
+          "SEQ_IN_INDEX": 2,
+          "COLUMN_NAME": "start_date"
+        },
+        {
+          "TABLE_NAME": "Season",
+          "INDEX_NAME": "unique_season_name_dates",
+          "NON_UNIQUE": 0,
+          "SEQ_IN_INDEX": 3,
+          "COLUMN_NAME": "end_date"
+        }
+      ],
+      "triggers": [
+        {
+          "TRIGGER_NAME": "validate_forecast_season",
+          "EVENT_OBJECT_TABLE": "Forecast",
+          "EVENT_MANIPULATION": "INSERT",
+          "ACTION_TIMING": "BEFORE"
+        },
+        {
+          "TRIGGER_NAME": "validate_forecast_season_update",
+          "EVENT_OBJECT_TABLE": "Forecast",
+          "EVENT_MANIPULATION": "UPDATE",
+          "ACTION_TIMING": "BEFORE"
+        },
+        {
+          "TRIGGER_NAME": "validate_harvest_season",
+          "EVENT_OBJECT_TABLE": "Harvest",
+          "EVENT_MANIPULATION": "INSERT",
+          "ACTION_TIMING": "BEFORE"
+        },
+        {
+          "TRIGGER_NAME": "validate_harvest_season_update",
+          "EVENT_OBJECT_TABLE": "Harvest",
+          "EVENT_MANIPULATION": "UPDATE",
+          "ACTION_TIMING": "BEFORE"
+        }
+      ],
+      "views": [
+        {
+          "TABLE_NAME": "vw_forecast_status",
+          "VIEW_DEFINITION": "select `f`.`forecast_id` AS `forecast_id`,`rv`.`name` AS `variety`,`c`.`crop_id` AS `crop_id`,`s`.`name` AS `season`,`f`.`forecast_date` AS `forecast_date`,`f`.`estimated_quantity` AS `estimated_quantity`,`f`.`method` AS `method`,`h`.`quantity` AS `actual_quantity`,(case when (`h`.`harvest_id` is not null) then 'Evaluated' else 'Pending' end) AS `forecast_status`,(case when (`h`.`harvest_id` is not null) then abs((`f`.`estimated_quantity` - `h`.`quantity`)) else NULL end) AS `absolute_error` from ((((`RoseProductionDB`.`Forecast` `f` join `RoseProductionDB`.`Crop` `c` on((`f`.`crop_id` = `c`.`crop_id`))) join `RoseProductionDB`.`RoseVariety` `rv` on((`c`.`variety_id` = `rv`.`variety_id`))) join `RoseProductionDB`.`Season` `s` on((`f`.`season_id` = `s`.`season_id`))) left join `RoseProductionDB`.`Harvest` `h` on(((`f`.`crop_id` = `h`.`crop_id`) and (`f`.`forecast_date` = `h`.`harvest_date`))))"
+        },
+        {
+          "TABLE_NAME": "vw_forecast_summary",
+          "VIEW_DEFINITION": "select count(0) AS `total_forecasts`,sum((case when (`RoseProductionDB`.`vw_forecast_status`.`forecast_status` = 'Evaluated') then 1 else 0 end)) AS `evaluated_forecasts`,sum((case when (`RoseProductionDB`.`vw_forecast_status`.`forecast_status` = 'Pending') then 1 else 0 end)) AS `pending_forecasts`,round(avg(`RoseProductionDB`.`vw_forecast_status`.`absolute_error`),2) AS `MAE`,round(avg((case when (`RoseProductionDB`.`vw_forecast_status`.`forecast_status` = 'Evaluated') then (abs(((`RoseProductionDB`.`vw_forecast_status`.`actual_quantity` - `RoseProductionDB`.`vw_forecast_status`.`estimated_quantity`) / `RoseProductionDB`.`vw_forecast_status`.`actual_quantity`)) * 100) end)),2) AS `MAPE` from `RoseProductionDB`.`vw_forecast_status`"
+        }
+      ],
+      "routines": [
+        {
+          "ROUTINE_NAME": "sp_add_variety_production",
+          "ROUTINE_TYPE": "PROCEDURE"
+        },
+        {
+          "ROUTINE_NAME": "sp_check_variety",
+          "ROUTINE_TYPE": "PROCEDURE"
+        },
+        {
+          "ROUTINE_NAME": "sp_get_variety_production",
+          "ROUTINE_TYPE": "PROCEDURE"
+        },
+        {
+          "ROUTINE_NAME": "sp_production_by_variety",
+          "ROUTINE_TYPE": "PROCEDURE"
+        },
+        {
+          "ROUTINE_NAME": "sp_safe_variety_query",
+          "ROUTINE_TYPE": "PROCEDURE"
+        },
+        {
+          "ROUTINE_NAME": "sp_validate_variety",
+          "ROUTINE_TYPE": "PROCEDURE"
+        }
+      ],
+      "row_counts": {
+        "Farm": 2,
+        "Lot": 6,
+        "RoseVariety": 7,
+        "Crop": 8,
+        "Season": 5,
+        "Harvest": 22,
+        "Forecast": 8
+      },
+      "schema_fingerprint": "66c606e099f4c0efc42ef4eda6251733edb026cec50808bc55d5964e38836601"
+    },
+    "performance": {
+      "row_counts": {
+        "Farm": 2,
+        "Lot": 6,
+        "RoseVariety": 7,
+        "Crop": 8,
+        "Season": 5,
+        "Harvest": 22,
+        "Forecast": 8
+      },
+      "sql": {
+        "Q1 harvest history: crop + date range": {
+          "query": "SELECT * FROM Harvest WHERE crop_id = 1 AND harvest_date BETWEEN '2026-02-01' AND '2026-02-28'",
+          "timing": {
+            "n": 30,
+            "min_ms": 0.736,
+            "median_ms": 1.652,
+            "p95_ms": 3.015,
+            "max_ms": 3.443
+          },
+          "explain": [
+            {
+              "table": "Harvest",
+              "type": "range",
+              "possible_keys": "unique_harvest_crop_date,idx_harvest_crop_date",
+              "key": "unique_harvest_crop_date",
+              "rows": 5,
+              "Extra": "Using index condition"
+            }
+          ],
+          "explain_analyze": "-> Index range scan on Harvest using unique_harvest_crop_date over (crop_id = 1 AND '2026-02-01' <= harvest_date <= '2026-02-28'), with index condition: ((Harvest.crop_id = 1) and (Harvest.harvest_date between '2026-02-01' and '2026-02-28'))  (cost=2.51 rows=5) (actual time=0.0656..0.111 rows=5 loops=1)\n"
+        },
+        "Q2 harvest history: date range only": {
+          "query": "SELECT * FROM Harvest WHERE harvest_date BETWEEN '2026-02-01' AND '2026-02-28'",
+          "timing": {
+            "n": 30,
+            "min_ms": 2.647,
+            "median_ms": 3.189,
+            "p95_ms": 3.527,
+            "max_ms": 3.685
+          },
+          "explain": [
+            {
+              "table": "Harvest",
+              "type": "ALL",
+              "possible_keys": null,
+              "key": null,
+              "rows": 26,
+              "Extra": "Using where"
+            }
+          ],
+          "explain_analyze": "-> Filter: (Harvest.harvest_date between '2026-02-01' and '2026-02-28')  (cost=2.85 rows=2.89) (actual time=0.0909..0.169 rows=13 loops=1)\n    -> Table scan on Harvest  (cost=2.85 rows=26) (actual time=0.0812..0.106 rows=22 loops=1)\n"
+        },
+        "Q3 production statistics by variety": {
+          "query": "SELECT rv.variety_id, rv.name, COUNT(*), SUM(h.quantity), AVG(h.quantity), MIN(h.quantity), MAX(h.quantity) FROM Harvest h JOIN Crop c ON c.crop_id = h.crop_id JOIN RoseVariety rv ON rv.variety_id = c.variety_id GROUP BY rv.variety_id, rv.name",
+          "timing": {
+            "n": 30,
+            "min_ms": 1.865,
+            "median_ms": 2.978,
+            "p95_ms": 3.962,
+            "max_ms": 4.274
+          },
+          "explain": [
+            {
+              "table": "h",
+              "type": "ALL",
+              "possible_keys": "unique_harvest_crop_date,idx_harvest_crop_date",
+              "key": null,
+              "rows": 26,
+              "Extra": "Using temporary"
+            },
+            {
+              "table": "c",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY,variety_id",
+              "key": "PRIMARY",
+              "rows": 1,
+              "Extra": null
+            },
+            {
+              "table": "rv",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "rows": 1,
+              "Extra": null
+            }
+          ],
+          "explain_analyze": "-> Table scan on <temporary>  (actual time=0.394..0.398 rows=5 loops=1)\n    -> Aggregate using temporary table  (actual time=0.39..0.39 rows=5 loops=1)\n        -> Nested loop inner join  (cost=21.1 rows=26) (actual time=0.119..0.24 rows=22 loops=1)\n            -> Nested loop inner join  (cost=12 rows=26) (actual time=0.109..0.184 rows=22 loops=1)\n                -> Table scan on h  (cost=2.85 rows=26) (actual time=0.0818..0.102 rows=22 loops=1)\n                -> Single-row index lookup on c using PRIMARY (crop_id=h.crop_id)  (cost=0.254 rows=1) (actual time=0.00279..0.00291 rows=1 loops=22)\n            -> Single-row index lookup on rv using PRIMARY (variety_id=c.variety_id)  (cost=0.254 rows=1) (actual time=0.00173..0.00186 rows=1 loops=22)\n"
+        },
+        "Q4 production by lot": {
+          "query": "SELECT l.lot_id, SUM(h.quantity) FROM Harvest h JOIN Crop c ON c.crop_id = h.crop_id JOIN Lot l ON l.lot_id = c.lot_id GROUP BY l.lot_id",
+          "timing": {
+            "n": 30,
+            "min_ms": 1.628,
+            "median_ms": 2.814,
+            "p95_ms": 3.835,
+            "max_ms": 4.42
+          },
+          "explain": [
+            {
+              "table": "h",
+              "type": "ALL",
+              "possible_keys": "unique_harvest_crop_date,idx_harvest_crop_date",
+              "key": null,
+              "rows": 26,
+              "Extra": "Using temporary"
+            },
+            {
+              "table": "c",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY,lot_id",
+              "key": "PRIMARY",
+              "rows": 1,
+              "Extra": null
+            },
+            {
+              "table": "l",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY,unique_lot_farm_name",
+              "key": "PRIMARY",
+              "rows": 1,
+              "Extra": "Using index"
+            }
+          ],
+          "explain_analyze": "-> Table scan on <temporary>  (actual time=0.483..0.486 rows=3 loops=1)\n    -> Aggregate using temporary table  (actual time=0.479..0.479 rows=3 loops=1)\n        -> Nested loop inner join  (cost=21.1 rows=26) (actual time=0.129..0.337 rows=22 loops=1)\n            -> Nested loop inner join  (cost=12 rows=26) (actual time=0.112..0.252 rows=22 loops=1)\n                -> Table scan on h  (cost=2.85 rows=26) (actual time=0.0775..0.11 rows=22 loops=1)\n                -> Single-row index lookup on c using PRIMARY (crop_id=h.crop_id)  (cost=0.254 rows=1) (actual time=0.00481..0.00499 rows=1 loops=22)\n            -> Single-row covering index lookup on l using PRIMARY (lot_id=c.lot_id)  (cost=0.254 rows=1) (actual time=0.00253..0.00271 rows=1 loops=22)\n"
+        },
+        "Q5 production by season": {
+          "query": "SELECT s.season_id, SUM(h.quantity) FROM Harvest h JOIN Season s ON s.season_id = h.season_id GROUP BY s.season_id",
+          "timing": {
+            "n": 30,
+            "min_ms": 1.934,
+            "median_ms": 2.878,
+            "p95_ms": 4.115,
+            "max_ms": 4.456
+          },
+          "explain": [
+            {
+              "table": "h",
+              "type": "ALL",
+              "possible_keys": "season_id",
+              "key": null,
+              "rows": 26,
+              "Extra": "Using temporary"
+            },
+            {
+              "table": "s",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY,unique_season_name_dates",
+              "key": "PRIMARY",
+              "rows": 1,
+              "Extra": "Using index"
+            }
+          ],
+          "explain_analyze": "-> Table scan on <temporary>  (actual time=0.281..0.284 rows=3 loops=1)\n    -> Aggregate using temporary table  (actual time=0.277..0.277 rows=3 loops=1)\n        -> Nested loop inner join  (cost=12 rows=26) (actual time=0.108..0.182 rows=22 loops=1)\n            -> Table scan on h  (cost=2.85 rows=26) (actual time=0.0689..0.095 rows=22 loops=1)\n            -> Single-row covering index lookup on s using PRIMARY (season_id=h.season_id)  (cost=0.254 rows=1) (actual time=0.00272..0.00288 rows=1 loops=22)\n"
+        },
+        "Q6 moving-average history (last 3 before a date)": {
+          "query": "SELECT quantity FROM Harvest WHERE crop_id = 1 AND harvest_date < '2026-02-12' ORDER BY harvest_date DESC, harvest_id DESC LIMIT 3",
+          "timing": {
+            "n": 30,
+            "min_ms": 2.168,
+            "median_ms": 2.714,
+            "p95_ms": 3.682,
+            "max_ms": 3.834
+          },
+          "explain": [
+            {
+              "table": "Harvest",
+              "type": "range",
+              "possible_keys": "unique_harvest_crop_date,idx_harvest_crop_date",
+              "key": "unique_harvest_crop_date",
+              "rows": 5,
+              "Extra": "Using index condition; Backward index scan"
+            }
+          ],
+          "explain_analyze": "-> Limit: 3 row(s)  (cost=2.51 rows=3) (actual time=0.0853..0.0897 rows=3 loops=1)\n    -> Index range scan on Harvest using unique_harvest_crop_date over (crop_id = 1 AND harvest_date < '2026-02-12') (reverse), with index condition: ((Harvest.crop_id = 1) and (Harvest.harvest_date < DATE'2026-02-12'))  (cost=2.51 rows=5) (actual time=0.0834..0.0866 rows=3 loops=1)\n"
+        },
+        "Q7 forecast status view": {
+          "query": "SELECT * FROM vw_forecast_status",
+          "timing": {
+            "n": 30,
+            "min_ms": 3.798,
+            "median_ms": 4.342,
+            "p95_ms": 5.28,
+            "max_ms": 5.718
+          },
+          "explain": [
+            {
+              "table": "f",
+              "type": "ALL",
+              "possible_keys": "unique_crop_forecast_date,season_id",
+              "key": null,
+              "rows": 10,
+              "Extra": null
+            },
+            {
+              "table": "s",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "rows": 1,
+              "Extra": null
+            },
+            {
+              "table": "c",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY,variety_id",
+              "key": "PRIMARY",
+              "rows": 1,
+              "Extra": null
+            },
+            {
+              "table": "rv",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "rows": 1,
+              "Extra": null
+            },
+            {
+              "table": "h",
+              "type": "eq_ref",
+              "possible_keys": "unique_harvest_crop_date,idx_harvest_crop_date",
+              "key": "unique_harvest_crop_date",
+              "rows": 1,
+              "Extra": null
+            }
+          ],
+          "explain_analyze": "-> Nested loop left join  (cost=15.2 rows=10) (actual time=0.16..0.356 rows=8 loops=1)\n    -> Nested loop inner join  (cost=11.8 rows=10) (actual time=0.117..0.237 rows=8 loops=1)\n        -> Nested loop inner join  (cost=8.25 rows=10) (actual time=0.108..0.195 rows=8 loops=1)\n            -> Nested loop inner join  (cost=4.75 rows=10) (actual time=0.0977..0.143 rows=8 loops=1)\n                -> Table scan on f  (cost=1.25 rows=10) (actual time=0.0647..0.0804 rows=8 loops=1)\n                -> Single-row index lookup on s using PRIMARY (season_id=f.season_id)  (cost=0.26 rows=1) (actual time=0.00608..0.00622 rows=1 loops=8)\n            -> Single-row index lookup on c using PRIMARY (crop_id=f.crop_id)  (cost=0.26 rows=1) (actual time=0.00543..0.00556 rows=1 loops=8)\n        -> Single-row index lookup on rv using PRIMARY (variety_id=c.variety_id)  (cost=0.26 rows=1) (actual time=0.00414..0.00428 rows=1 loops=8)\n    -> Single-row index lookup on h using unique_harvest_crop_date (crop_id=f.crop_id, harvest_date=f.forecast_date)  (cost=0.26 rows=1) (actual time=0.0137..0.0138 rows=0.375 loops=8)\n"
+        },
+        "Q8 forecast summary view": {
+          "query": "SELECT * FROM vw_forecast_summary",
+          "timing": {
+            "n": 30,
+            "min_ms": 2.328,
+            "median_ms": 3.757,
+            "p95_ms": 5.313,
+            "max_ms": 5.68
+          },
+          "explain": [
+            {
+              "table": "<derived2>",
+              "type": "system",
+              "possible_keys": null,
+              "key": null,
+              "rows": 1,
+              "Extra": null
+            },
+            {
+              "table": "f",
+              "type": "ALL",
+              "possible_keys": "unique_crop_forecast_date,season_id",
+              "key": null,
+              "rows": 10,
+              "Extra": null
+            },
+            {
+              "table": "s",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "rows": 1,
+              "Extra": "Using index"
+            },
+            {
+              "table": "c",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY,variety_id",
+              "key": "PRIMARY",
+              "rows": 1,
+              "Extra": null
+            },
+            {
+              "table": "rv",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "rows": 1,
+              "Extra": "Using index"
+            },
+            {
+              "table": "h",
+              "type": "eq_ref",
+              "possible_keys": "unique_harvest_crop_date,idx_harvest_crop_date",
+              "key": "unique_harvest_crop_date",
+              "rows": 1,
+              "Extra": null
+            }
+          ],
+          "explain_analyze": "-> Rows fetched before execution  (cost=0..0 rows=1) (actual time=249e-6..574e-6 rows=1 loops=1)\n"
+        }
+      },
+      "api": {
+        "/farms": {
+          "status": 200,
+          "n": 15,
+          "min_ms": 12.472,
+          "median_ms": 17.926,
+          "p95_ms": 19.951,
+          "max_ms": 111.465
+        },
+        "/lots": {
+          "status": 200,
+          "n": 15,
+          "min_ms": 17.812,
+          "median_ms": 26.016,
+          "p95_ms": 28.919,
+          "max_ms": 34.845
+        },
+        "/varieties": {
+          "status": 200,
+          "n": 15,
+          "min_ms": 14.823,
+          "median_ms": 20.024,
+          "p95_ms": 20.902,
+          "max_ms": 25.191
+        },
+        "/crops": {
+          "status": 200,
+          "n": 15,
+          "min_ms": 15.888,
+          "median_ms": 37.462,
+          "p95_ms": 60.112,
+          "max_ms": 68.002
+        },
+        "/seasons": {
+          "status": 200,
+          "n": 15,
+          "min_ms": 15.617,
+          "median_ms": 23.838,
+          "p95_ms": 27.899,
+          "max_ms": 32.897
+        },
+        "/harvests": {
+          "status": 200,
+          "n": 15,
+          "min_ms": 53.308,
+          "median_ms": 77.804,
+          "p95_ms": 83.527,
+          "max_ms": 94.379
+        },
+        "/forecasts": {
+          "status": 200,
+          "n": 15,
+          "min_ms": 66.174,
+          "median_ms": 82.023,
+          "p95_ms": 89.436,
+          "max_ms": 92.176
+        },
+        "/forecasts/status": {
+          "status": 200,
+          "n": 15,
+          "min_ms": 12.905,
+          "median_ms": 15.638,
+          "p95_ms": 17.269,
+          "max_ms": 17.441
+        },
+        "/forecasts/summary": {
+          "status": 200,
+          "n": 15,
+          "min_ms": 11.56,
+          "median_ms": 13.965,
+          "p95_ms": 16.253,
+          "max_ms": 16.316
+        },
+        "/stats/dashboard": {
+          "status": 200,
+          "n": 15,
+          "min_ms": 102.037,
+          "median_ms": 127.4,
+          "p95_ms": 142.756,
+          "max_ms": 224.379
+        },
+        "/stats/production?group_by=variety": {
+          "status": 200,
+          "n": 15,
+          "min_ms": 20.325,
+          "median_ms": 24.962,
+          "p95_ms": 28.043,
+          "max_ms": 29.837
+        },
+        "/harvests?variety_id=1&date_from=2026-02-01&date_to=2026-02-28": {
+          "status": 200,
+          "n": 15,
+          "min_ms": 27.687,
+          "median_ms": 32.093,
+          "p95_ms": 37.658,
+          "max_ms": 41.284
+        },
+        "POST /forecasts/generate (preview)": {
+          "status": 200,
+          "n": 15,
+          "min_ms": 49.334,
+          "median_ms": 55.735,
+          "p95_ms": 63.323,
+          "max_ms": 73.175
+        }
+      }
+    },
+    "crud_matrix": [
+      {
+        "entity": "Farm",
+        "operation": "POST",
+        "method": "POST",
+        "endpoint": "/farms",
+        "input": {
+          "name": "AUDIT_fbe818b0_Farm",
+          "location": "Audit location"
+        },
+        "expected_status": 201,
+        "actual_status": 201,
+        "db_effect": {
+          "farm_id": 293,
+          "name": "AUDIT_fbe818b0_Farm",
+          "location": "Audit location"
+        },
+        "ms": 44.3,
+        "result": "PASS"
+      },
+      {
+        "entity": "Farm",
+        "operation": "GET all",
+        "method": "GET",
+        "endpoint": "/farms",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": null,
+        "ms": 18.5,
+        "result": "PASS"
+      },
+      {
+        "entity": "Farm",
+        "operation": "GET by id",
+        "method": "GET",
+        "endpoint": "/farms/293",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": null,
+        "ms": 24.6,
+        "result": "PASS"
+      },
+      {
+        "entity": "Farm",
+        "operation": "PUT",
+        "method": "PUT",
+        "endpoint": "/farms/293",
+        "input": {
+          "name": "AUDIT_fbe818b0_Farm2",
+          "location": "Updated"
+        },
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": {
+          "farm_id": 293,
+          "name": "AUDIT_fbe818b0_Farm2",
+          "location": "Updated"
+        },
+        "ms": 49.3,
+        "result": "PASS"
+      },
+      {
+        "entity": "Lot",
+        "operation": "POST",
+        "method": "POST",
+        "endpoint": "/lots",
+        "input": {
+          "farm_id": 293,
+          "name": "AUDIT_fbe818b0_Lot",
+          "area": 2.5
+        },
+        "expected_status": 201,
+        "actual_status": 201,
+        "db_effect": {
+          "lot_id": 272,
+          "farm_id": 293,
+          "name": "AUDIT_fbe818b0_Lot",
+          "area": 2.5
+        },
+        "ms": 41.6,
+        "result": "PASS"
+      },
+      {
+        "entity": "Lot",
+        "operation": "GET all",
+        "method": "GET",
+        "endpoint": "/lots",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": null,
+        "ms": 26.1,
+        "result": "PASS"
+      },
+      {
+        "entity": "Lot",
+        "operation": "GET by id",
+        "method": "GET",
+        "endpoint": "/lots/272",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": null,
+        "ms": 29.3,
+        "result": "PASS"
+      },
+      {
+        "entity": "Lot",
+        "operation": "PUT",
+        "method": "PUT",
+        "endpoint": "/lots/272",
+        "input": {
+          "farm_id": 293,
+          "name": "AUDIT_fbe818b0_Lot2",
+          "area": 3.75
+        },
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": {
+          "lot_id": 272,
+          "farm_id": 293,
+          "name": "AUDIT_fbe818b0_Lot2",
+          "area": 3.75
+        },
+        "ms": 66.0,
+        "result": "PASS"
+      },
+      {
+        "entity": "RoseVariety",
+        "operation": "POST",
+        "method": "POST",
+        "endpoint": "/varieties",
+        "input": {
+          "name": "AUDIT_fbe818b0_Variety",
+          "color": "Purple"
+        },
+        "expected_status": 201,
+        "actual_status": 201,
+        "db_effect": {
+          "variety_id": 289,
+          "name": "AUDIT_fbe818b0_Variety",
+          "color": "Purple"
+        },
+        "ms": 38.9,
+        "result": "PASS"
+      },
+      {
+        "entity": "RoseVariety",
+        "operation": "GET all",
+        "method": "GET",
+        "endpoint": "/varieties",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": null,
+        "ms": 17.8,
+        "result": "PASS"
+      },
+      {
+        "entity": "RoseVariety",
+        "operation": "GET by id",
+        "method": "GET",
+        "endpoint": "/varieties/289",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": null,
+        "ms": 24.7,
+        "result": "PASS"
+      },
+      {
+        "entity": "RoseVariety",
+        "operation": "PUT",
+        "method": "PUT",
+        "endpoint": "/varieties/289",
+        "input": {
+          "name": "AUDIT_fbe818b0_Variety2",
+          "color": "Red"
+        },
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": {
+          "variety_id": 289,
+          "name": "AUDIT_fbe818b0_Variety2",
+          "color": "Red"
+        },
+        "ms": 48.5,
+        "result": "PASS"
+      },
+      {
+        "entity": "Crop",
+        "operation": "POST",
+        "method": "POST",
+        "endpoint": "/crops",
+        "input": {
+          "lot_id": 272,
+          "variety_id": 289,
+          "planting_date": "2000-06-01"
+        },
+        "expected_status": 201,
+        "actual_status": 201,
+        "db_effect": {
+          "crop_id": 234,
+          "lot_id": 272,
+          "variety_id": 289,
+          "planting_date": "2000-06-01"
+        },
+        "ms": 68.4,
+        "result": "PASS"
+      },
+      {
+        "entity": "Crop",
+        "operation": "GET all",
+        "method": "GET",
+        "endpoint": "/crops",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": null,
+        "ms": 74.0,
+        "result": "PASS"
+      },
+      {
+        "entity": "Crop",
+        "operation": "GET by id",
+        "method": "GET",
+        "endpoint": "/crops/234",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": null,
+        "ms": 36.5,
+        "result": "PASS"
+      },
+      {
+        "entity": "Crop",
+        "operation": "PUT",
+        "method": "PUT",
+        "endpoint": "/crops/234",
+        "input": {
+          "lot_id": 272,
+          "variety_id": 289,
+          "planting_date": "2000-05-01"
+        },
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": {
+          "planting_date": "2000-05-01"
+        },
+        "ms": 40.7,
+        "result": "PASS"
+      },
+      {
+        "entity": "Season",
+        "operation": "POST",
+        "method": "POST",
+        "endpoint": "/seasons",
+        "input": {
+          "name": "AUDIT_fbe818b0_Season",
+          "start_date": "2001-02-01",
+          "end_date": "2001-02-14"
+        },
+        "expected_status": 201,
+        "actual_status": 201,
+        "db_effect": {
+          "season_id": 234,
+          "name": "AUDIT_fbe818b0_Season",
+          "start_date": "2001-02-01",
+          "end_date": "2001-02-14"
+        },
+        "ms": 20.9,
+        "result": "PASS"
+      },
+      {
+        "entity": "Season",
+        "operation": "GET all",
+        "method": "GET",
+        "endpoint": "/seasons",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": null,
+        "ms": 21.0,
+        "result": "PASS"
+      },
+      {
+        "entity": "Season",
+        "operation": "GET by id",
+        "method": "GET",
+        "endpoint": "/seasons/234",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": null,
+        "ms": 23.1,
+        "result": "PASS"
+      },
+      {
+        "entity": "Season",
+        "operation": "PUT",
+        "method": "PUT",
+        "endpoint": "/seasons/234",
+        "input": {
+          "name": "AUDIT_fbe818b0_Season2",
+          "start_date": "2001-02-01",
+          "end_date": "2001-02-28"
+        },
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": {
+          "season_id": 234,
+          "name": "AUDIT_fbe818b0_Season2",
+          "start_date": "2001-02-01",
+          "end_date": "2001-02-28"
+        },
+        "ms": 65.7,
+        "result": "PASS"
+      },
+      {
+        "entity": "Harvest",
+        "operation": "POST",
+        "method": "POST",
+        "endpoint": "/harvests",
+        "input": {
+          "crop_id": 234,
+          "season_id": 234,
+          "harvest_date": "2001-02-05",
+          "quantity": 1234
+        },
+        "expected_status": 201,
+        "actual_status": 201,
+        "db_effect": {
+          "harvest_id": 320,
+          "crop_id": 234,
+          "season_id": 234,
+          "harvest_date": "2001-02-05",
+          "quantity": 1234
+        },
+        "ms": 50.8,
+        "result": "PASS"
+      },
+      {
+        "entity": "Harvest",
+        "operation": "GET all",
+        "method": "GET",
+        "endpoint": "/harvests",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": null,
+        "ms": 60.2,
+        "result": "PASS"
+      },
+      {
+        "entity": "Harvest",
+        "operation": "GET by id",
+        "method": "GET",
+        "endpoint": "/harvests/320",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": null,
+        "ms": 31.6,
+        "result": "PASS"
+      },
+      {
+        "entity": "Harvest",
+        "operation": "PUT",
+        "method": "PUT",
+        "endpoint": "/harvests/320",
+        "input": {
+          "crop_id": 234,
+          "season_id": 234,
+          "harvest_date": "2001-02-06",
+          "quantity": 1300
+        },
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": {
+          "harvest_id": 320,
+          "crop_id": 234,
+          "season_id": 234,
+          "harvest_date": "2001-02-06",
+          "quantity": 1300
+        },
+        "ms": 83.9,
+        "result": "PASS"
+      },
+      {
+        "entity": "Forecast",
+        "operation": "POST",
+        "method": "POST",
+        "endpoint": "/forecasts",
+        "input": {
+          "crop_id": 234,
+          "season_id": 234,
+          "forecast_date": "2001-02-20",
+          "estimated_quantity": 1500.5,
+          "method": "Audit manual"
+        },
+        "expected_status": 201,
+        "actual_status": 201,
+        "db_effect": {
+          "forecast_id": 86,
+          "crop_id": 234,
+          "season_id": 234,
+          "forecast_date": "2001-02-20",
+          "estimated_quantity": 1500.5,
+          "method": "Audit manual"
+        },
+        "ms": 77.4,
+        "result": "PASS"
+      },
+      {
+        "entity": "Forecast",
+        "operation": "GET all",
+        "method": "GET",
+        "endpoint": "/forecasts",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": null,
+        "ms": 101.6,
+        "result": "PASS"
+      },
+      {
+        "entity": "Forecast",
+        "operation": "GET by id",
+        "method": "GET",
+        "endpoint": "/forecasts/86",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": null,
+        "ms": 35.4,
+        "result": "PASS"
+      },
+      {
+        "entity": "Forecast",
+        "operation": "PUT",
+        "method": "PUT",
+        "endpoint": "/forecasts/86",
+        "input": {
+          "crop_id": 234,
+          "season_id": 234,
+          "forecast_date": "2001-02-21",
+          "estimated_quantity": 0,
+          "method": "Audit manual v2"
+        },
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": {
+          "forecast_id": 86,
+          "crop_id": 234,
+          "season_id": 234,
+          "forecast_date": "2001-02-21",
+          "estimated_quantity": 0.0,
+          "method": "Audit manual v2"
+        },
+        "ms": 78.3,
+        "result": "PASS"
+      },
+      {
+        "entity": "Farm",
+        "operation": "POST missing fields",
+        "method": "POST",
+        "endpoint": "/farms",
+        "input": {},
+        "expected_status": 400,
+        "actual_status": 400,
+        "db_effect": "no change expected",
+        "ms": 7.2,
+        "result": "PASS"
+      },
+      {
+        "entity": "Farm",
+        "operation": "POST invalid type",
+        "method": "POST",
+        "endpoint": "/farms",
+        "input": {
+          "name": 5,
+          "location": "x"
+        },
+        "expected_status": 400,
+        "actual_status": 400,
+        "db_effect": "no change expected",
+        "ms": 6.7,
+        "result": "PASS"
+      },
+      {
+        "entity": "Farm",
+        "operation": "GET missing id",
+        "method": "GET",
+        "endpoint": "/farms/999999999",
+        "input": null,
+        "expected_status": 404,
+        "actual_status": 404,
+        "db_effect": "no change expected",
+        "ms": 16.9,
+        "result": "PASS"
+      },
+      {
+        "entity": "Farm",
+        "operation": "PUT missing id",
+        "method": "PUT",
+        "endpoint": "/farms/999999999",
+        "input": {
+          "name": "x",
+          "location": "y"
+        },
+        "expected_status": 404,
+        "actual_status": 404,
+        "db_effect": "no change expected",
+        "ms": 15.9,
+        "result": "PASS"
+      },
+      {
+        "entity": "Farm",
+        "operation": "DELETE in use (has lot)",
+        "method": "DELETE",
+        "endpoint": "/farms/293",
+        "input": null,
+        "expected_status": 409,
+        "actual_status": 409,
+        "db_effect": "no change expected",
+        "ms": 27.4,
+        "result": "PASS"
+      },
+      {
+        "entity": "Lot",
+        "operation": "POST invalid FK farm",
+        "method": "POST",
+        "endpoint": "/lots",
+        "input": {
+          "farm_id": 999999999,
+          "name": "x",
+          "area": 1
+        },
+        "expected_status": 400,
+        "actual_status": 400,
+        "db_effect": "no change expected",
+        "ms": 15.8,
+        "result": "PASS"
+      },
+      {
+        "entity": "Lot",
+        "operation": "POST area <= 0",
+        "method": "POST",
+        "endpoint": "/lots",
+        "input": {
+          "farm_id": 293,
+          "name": "x",
+          "area": 0
+        },
+        "expected_status": 400,
+        "actual_status": 400,
+        "db_effect": "no change expected",
+        "ms": 7.0,
+        "result": "PASS"
+      },
+      {
+        "entity": "Lot",
+        "operation": "DELETE missing id",
+        "method": "DELETE",
+        "endpoint": "/lots/999999999",
+        "input": null,
+        "expected_status": 404,
+        "actual_status": 404,
+        "db_effect": "no change expected",
+        "ms": 16.0,
+        "result": "PASS"
+      },
+      {
+        "entity": "Lot",
+        "operation": "DELETE in use (has crop)",
+        "method": "DELETE",
+        "endpoint": "/lots/272",
+        "input": null,
+        "expected_status": 409,
+        "actual_status": 409,
+        "db_effect": "no change expected",
+        "ms": 22.1,
+        "result": "PASS"
+      },
+      {
+        "entity": "RoseVariety",
+        "operation": "POST too long",
+        "method": "POST",
+        "endpoint": "/varieties",
+        "input": {
+          "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "color": "Red"
+        },
+        "expected_status": 400,
+        "actual_status": 400,
+        "db_effect": "no change expected",
+        "ms": 4.3,
+        "result": "PASS"
+      },
+      {
+        "entity": "RoseVariety",
+        "operation": "DELETE in use (has crop)",
+        "method": "DELETE",
+        "endpoint": "/varieties/289",
+        "input": null,
+        "expected_status": 409,
+        "actual_status": 409,
+        "db_effect": "no change expected",
+        "ms": 23.3,
+        "result": "PASS"
+      },
+      {
+        "entity": "Crop",
+        "operation": "POST invalid FK variety",
+        "method": "POST",
+        "endpoint": "/crops",
+        "input": {
+          "lot_id": 272,
+          "variety_id": 999999999,
+          "planting_date": "2000-01-01"
+        },
+        "expected_status": 400,
+        "actual_status": 400,
+        "db_effect": "no change expected",
+        "ms": 21.1,
+        "result": "PASS"
+      },
+      {
+        "entity": "Crop",
+        "operation": "POST invalid date",
+        "method": "POST",
+        "endpoint": "/crops",
+        "input": {
+          "lot_id": 272,
+          "variety_id": 289,
+          "planting_date": "2001-02-30"
+        },
+        "expected_status": 400,
+        "actual_status": 400,
+        "db_effect": "no change expected",
+        "ms": 6.5,
+        "result": "PASS"
+      },
+      {
+        "entity": "Crop",
+        "operation": "DELETE in use (has harvest)",
+        "method": "DELETE",
+        "endpoint": "/crops/234",
+        "input": null,
+        "expected_status": 409,
+        "actual_status": 409,
+        "db_effect": "no change expected",
+        "ms": 38.4,
+        "result": "PASS"
+      },
+      {
+        "entity": "Season",
+        "operation": "POST end before start",
+        "method": "POST",
+        "endpoint": "/seasons",
+        "input": {
+          "name": "x",
+          "start_date": "2001-05-10",
+          "end_date": "2001-05-01"
+        },
+        "expected_status": 400,
+        "actual_status": 400,
+        "db_effect": "no change expected",
+        "ms": 6.3,
+        "result": "PASS"
+      },
+      {
+        "entity": "Season",
+        "operation": "DELETE in use (has harvest)",
+        "method": "DELETE",
+        "endpoint": "/seasons/234",
+        "input": null,
+        "expected_status": 409,
+        "actual_status": 409,
+        "db_effect": "no change expected",
+        "ms": 47.4,
+        "result": "PASS"
+      },
+      {
+        "entity": "Harvest",
+        "operation": "POST quantity 0",
+        "method": "POST",
+        "endpoint": "/harvests",
+        "input": {
+          "crop_id": 234,
+          "season_id": 234,
+          "harvest_date": "2001-02-07",
+          "quantity": 0
+        },
+        "expected_status": 400,
+        "actual_status": 400,
+        "db_effect": "no change expected",
+        "ms": 7.0,
+        "result": "PASS"
+      },
+      {
+        "entity": "Harvest",
+        "operation": "POST quantity not integer",
+        "method": "POST",
+        "endpoint": "/harvests",
+        "input": {
+          "crop_id": 234,
+          "season_id": 234,
+          "harvest_date": "2001-02-07",
+          "quantity": 1.5
+        },
+        "expected_status": 400,
+        "actual_status": 400,
+        "db_effect": "no change expected",
+        "ms": 6.5,
+        "result": "PASS"
+      },
+      {
+        "entity": "Harvest",
+        "operation": "POST outside season",
+        "method": "POST",
+        "endpoint": "/harvests",
+        "input": {
+          "crop_id": 234,
+          "season_id": 234,
+          "harvest_date": "2001-03-15",
+          "quantity": 5
+        },
+        "expected_status": 400,
+        "actual_status": 400,
+        "db_effect": "no change expected",
+        "ms": 30.5,
+        "result": "PASS"
+      },
+      {
+        "entity": "Harvest",
+        "operation": "POST invalid FK crop",
+        "method": "POST",
+        "endpoint": "/harvests",
+        "input": {
+          "crop_id": 999999999,
+          "season_id": 234,
+          "harvest_date": "2001-02-07",
+          "quantity": 5
+        },
+        "expected_status": 400,
+        "actual_status": 400,
+        "db_effect": "no change expected",
+        "ms": 15.5,
+        "result": "PASS"
+      },
+      {
+        "entity": "Harvest",
+        "operation": "POST duplicate crop+day",
+        "method": "POST",
+        "endpoint": "/harvests",
+        "input": {
+          "crop_id": 234,
+          "season_id": 234,
+          "harvest_date": "2001-02-06",
+          "quantity": 5
+        },
+        "expected_status": 409,
+        "actual_status": 409,
+        "db_effect": "no change expected",
+        "ms": 33.5,
+        "result": "PASS"
+      },
+      {
+        "entity": "Forecast",
+        "operation": "POST negative estimate",
+        "method": "POST",
+        "endpoint": "/forecasts",
+        "input": {
+          "crop_id": 234,
+          "season_id": 234,
+          "forecast_date": "2001-02-22",
+          "estimated_quantity": -1,
+          "method": "x"
+        },
+        "expected_status": 400,
+        "actual_status": 400,
+        "db_effect": "no change expected",
+        "ms": 6.6,
+        "result": "PASS"
+      },
+      {
+        "entity": "Forecast",
+        "operation": "POST duplicate crop+date",
+        "method": "POST",
+        "endpoint": "/forecasts",
+        "input": {
+          "crop_id": 234,
+          "season_id": 234,
+          "forecast_date": "2001-02-21",
+          "estimated_quantity": 1,
+          "method": "x"
+        },
+        "expected_status": 409,
+        "actual_status": 409,
+        "db_effect": "no change expected",
+        "ms": 43.0,
+        "result": "PASS"
+      },
+      {
+        "entity": "Forecast",
+        "operation": "POST invalid FK season",
+        "method": "POST",
+        "endpoint": "/forecasts",
+        "input": {
+          "crop_id": 234,
+          "season_id": 999999999,
+          "forecast_date": "2001-02-22",
+          "estimated_quantity": 1,
+          "method": "x"
+        },
+        "expected_status": 400,
+        "actual_status": 400,
+        "db_effect": "no change expected",
+        "ms": 20.1,
+        "result": "PASS"
+      },
+      {
+        "entity": "Forecast",
+        "operation": "PUT missing id",
+        "method": "PUT",
+        "endpoint": "/forecasts/999999999",
+        "input": {},
+        "expected_status": 404,
+        "actual_status": 404,
+        "db_effect": "no change expected",
+        "ms": 14.8,
+        "result": "PASS"
+      },
+      {
+        "entity": "Harvest",
+        "operation": "POST invalid JSON",
+        "method": "POST",
+        "endpoint": "/harvests",
+        "input": null,
+        "expected_status": 400,
+        "actual_status": 400,
+        "db_effect": "no change expected",
+        "ms": 8.5,
+        "result": "PASS"
+      },
+      {
+        "entity": "Forecast",
+        "operation": "DELETE",
+        "method": "DELETE",
+        "endpoint": "/forecasts/86",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": {
+          "n": 0
+        },
+        "ms": 28.2,
+        "result": "PASS"
+      },
+      {
+        "entity": "Forecast",
+        "operation": "GET after DELETE",
+        "method": "GET",
+        "endpoint": "/forecasts/86",
+        "input": null,
+        "expected_status": 404,
+        "actual_status": 404,
+        "db_effect": null,
+        "ms": 15.2,
+        "result": "PASS"
+      },
+      {
+        "entity": "Harvest",
+        "operation": "DELETE",
+        "method": "DELETE",
+        "endpoint": "/harvests/320",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": {
+          "n": 0
+        },
+        "ms": 28.1,
+        "result": "PASS"
+      },
+      {
+        "entity": "Harvest",
+        "operation": "GET after DELETE",
+        "method": "GET",
+        "endpoint": "/harvests/320",
+        "input": null,
+        "expected_status": 404,
+        "actual_status": 404,
+        "db_effect": null,
+        "ms": 14.9,
+        "result": "PASS"
+      },
+      {
+        "entity": "Crop",
+        "operation": "DELETE",
+        "method": "DELETE",
+        "endpoint": "/crops/234",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": {
+          "n": 0
+        },
+        "ms": 53.1,
+        "result": "PASS"
+      },
+      {
+        "entity": "Crop",
+        "operation": "GET after DELETE",
+        "method": "GET",
+        "endpoint": "/crops/234",
+        "input": null,
+        "expected_status": 404,
+        "actual_status": 404,
+        "db_effect": null,
+        "ms": 15.7,
+        "result": "PASS"
+      },
+      {
+        "entity": "Season",
+        "operation": "DELETE",
+        "method": "DELETE",
+        "endpoint": "/seasons/234",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": {
+          "n": 0
+        },
+        "ms": 45.3,
+        "result": "PASS"
+      },
+      {
+        "entity": "Season",
+        "operation": "GET after DELETE",
+        "method": "GET",
+        "endpoint": "/seasons/234",
+        "input": null,
+        "expected_status": 404,
+        "actual_status": 404,
+        "db_effect": null,
+        "ms": 15.3,
+        "result": "PASS"
+      },
+      {
+        "entity": "Lot",
+        "operation": "DELETE",
+        "method": "DELETE",
+        "endpoint": "/lots/272",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": {
+          "n": 0
+        },
+        "ms": 34.8,
+        "result": "PASS"
+      },
+      {
+        "entity": "Lot",
+        "operation": "GET after DELETE",
+        "method": "GET",
+        "endpoint": "/lots/272",
+        "input": null,
+        "expected_status": 404,
+        "actual_status": 404,
+        "db_effect": null,
+        "ms": 16.9,
+        "result": "PASS"
+      },
+      {
+        "entity": "RoseVariety",
+        "operation": "DELETE",
+        "method": "DELETE",
+        "endpoint": "/varieties/289",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": {
+          "n": 0
+        },
+        "ms": 37.9,
+        "result": "PASS"
+      },
+      {
+        "entity": "RoseVariety",
+        "operation": "GET after DELETE",
+        "method": "GET",
+        "endpoint": "/varieties/289",
+        "input": null,
+        "expected_status": 404,
+        "actual_status": 404,
+        "db_effect": null,
+        "ms": 13.5,
+        "result": "PASS"
+      },
+      {
+        "entity": "Farm",
+        "operation": "DELETE",
+        "method": "DELETE",
+        "endpoint": "/farms/293",
+        "input": null,
+        "expected_status": 200,
+        "actual_status": 200,
+        "db_effect": {
+          "n": 0
+        },
+        "ms": 48.4,
+        "result": "PASS"
+      },
+      {
+        "entity": "Farm",
+        "operation": "GET after DELETE",
+        "method": "GET",
+        "endpoint": "/farms/293",
+        "input": null,
+        "expected_status": 404,
+        "actual_status": 404,
+        "db_effect": null,
+        "ms": 6.0,
+        "result": "PASS"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "section": "ENV",
+      "id": "ENV-01",
+      "title": "API reachable and public home endpoint",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS"
+    },
+    {
+      "section": "ENV",
+      "id": "ENV-02",
+      "title": "API runs the audited code version",
+      "expected": "1.2.0",
+      "actual": "1.2.0",
+      "result": "PASS"
+    },
+    {
+      "section": "ENV",
+      "id": "ENV-03",
+      "title": "Backend connected to MySQL 8 RoseProductionDB",
+      "expected": "8.x / RoseProductionDB",
+      "actual": "8.0.33 / RoseProductionDB",
+      "result": "PASS"
+    },
+    {
+      "section": "SCHEMA",
+      "id": "SCH-01",
+      "title": "Seven entity tables exist (InnoDB)",
+      "expected": [
+        "Crop",
+        "Farm",
+        "Forecast",
+        "Harvest",
+        "Lot",
+        "RoseVariety",
+        "Season"
+      ],
+      "actual": [
+        "Crop",
+        "Farm",
+        "Forecast",
+        "Harvest",
+        "Lot",
+        "RoseVariety",
+        "Season"
+      ],
+      "result": "PASS"
+    },
+    {
+      "section": "SCHEMA",
+      "id": "SCH-02",
+      "title": "Both views exist",
+      "expected": [
+        "vw_forecast_status",
+        "vw_forecast_summary"
+      ],
+      "actual": [
+        "vw_forecast_status",
+        "vw_forecast_summary"
+      ],
+      "result": "PASS"
+    },
+    {
+      "section": "SCHEMA",
+      "id": "SCH-03",
+      "title": "SQLAlchemy models match the MySQL schema (columns, types, nullability, PK, FK, named constraints, index)",
+      "expected": "no mismatch",
+      "actual": "no mismatch",
+      "result": "PASS"
+    },
+    {
+      "section": "DATA",
+      "id": "DQ-01",
+      "title": "No orphan rows in the 7 relationships",
+      "expected": 0,
+      "actual": {
+        "Lot->Farm": 0,
+        "Crop->Lot": 0,
+        "Crop->RoseVariety": 0,
+        "Harvest->Crop": 0,
+        "Harvest->Season": 0,
+        "Forecast->Crop": 0,
+        "Forecast->Season": 0
+      },
+      "result": "PASS"
+    },
+    {
+      "section": "DATA",
+      "id": "DQ-02",
+      "title": "Existing rows satisfy the database rules",
+      "expected": 0,
+      "actual": {
+        "harvest quantity <= 0": 0,
+        "forecast estimate < 0": 0,
+        "season end < start": 0,
+        "harvest outside its season": 0,
+        "forecast outside its season": 0
+      },
+      "result": "PASS"
+    },
+    {
+      "section": "DATA",
+      "id": "DQ-03",
+      "title": "Harvests dated before their crop's planting date (not prevented by the schema)",
+      "expected": "none",
+      "actual": [
+        {
+          "harvest_id": 16,
+          "crop_id": 6,
+          "planting_date": "2026-02-15",
+          "harvest_date": "2026-01-20"
+        },
+        {
+          "harvest_id": 17,
+          "crop_id": 6,
+          "planting_date": "2026-02-15",
+          "harvest_date": "2026-01-22"
+        },
+        {
+          "harvest_id": 18,
+          "crop_id": 6,
+          "planting_date": "2026-02-15",
+          "harvest_date": "2026-01-24"
+        }
+      ],
+      "result": "FINDING",
+      "severity": "MEDIUM"
+    },
+    {
+      "section": "DATA",
+      "id": "DQ-04",
+      "title": "Forecasts dated before their crop's planting date",
+      "expected": "none",
+      "actual": [
+        {
+          "forecast_id": 7,
+          "crop_id": 6,
+          "planting_date": "2026-02-15",
+          "forecast_date": "2026-01-25"
+        }
+      ],
+      "result": "FINDING",
+      "severity": "LOW"
+    },
+    {
+      "section": "DATA",
+      "id": "DQ-05",
+      "title": "Harvests dated in the future",
+      "expected": "none",
+      "actual": 0,
+      "result": "FINDING",
+      "severity": "NONE"
+    },
+    {
+      "section": "DATA",
+      "id": "DQ-06",
+      "title": "More than one harvest for the same crop and day (would duplicate rows of vw_forecast_status)",
+      "expected": "none",
+      "actual": "none",
+      "result": "FINDING",
+      "severity": "NONE"
+    },
+    {
+      "section": "DATA",
+      "id": "DQ-07",
+      "title": "Rose varieties sharing a name (pre-existing; new ones are refused by the API since 2026-11-23)",
+      "expected": "none",
+      "actual": [
+        {
+          "name": "quicksand",
+          "n": 2,
+          "ids": "6,7",
+          "colors": "Peach"
+        }
+      ],
+      "result": "FINDING",
+      "severity": "LOW"
+    },
+    {
+      "section": "DATA",
+      "id": "DQ-08",
+      "title": "Identical crops (same lot, variety and planting date; pre-existing, new ones refused by the API)",
+      "expected": "none",
+      "actual": [
+        {
+          "lot_id": 3,
+          "variety_id": 6,
+          "planting_date": "2026-11-15",
+          "n": 2,
+          "ids": "7,8"
+        }
+      ],
+      "result": "FINDING",
+      "severity": "LOW"
+    },
+    {
+      "section": "DATA",
+      "id": "DQ-09",
+      "title": "Lots with area <= 0 (no CHECK in the schema; enforced by the API only)",
+      "expected": "none",
+      "actual": 0,
+      "result": "FINDING",
+      "severity": "NONE"
+    },
+    {
+      "section": "NFR-01",
+      "id": "PERF-01",
+      "title": "Crop + date history query uses an index on (crop_id, harvest_date)",
+      "expected": "key in idx_harvest_crop_date/unique_harvest_crop_date",
+      "actual": "type=range key=unique_harvest_crop_date rows=5",
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-01",
+      "id": "PERF-02",
+      "title": "Forecast history query uses an index on (crop_id, harvest_date)",
+      "expected": "key in idx_harvest_crop_date/unique_harvest_crop_date",
+      "actual": "type=range key=unique_harvest_crop_date",
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-01",
+      "id": "PERF-03",
+      "title": "All measured API read endpoints answer 200",
+      "expected": 200,
+      "actual": {
+        "/farms": 200,
+        "/lots": 200,
+        "/varieties": 200,
+        "/crops": 200,
+        "/seasons": 200,
+        "/harvests": 200,
+        "/forecasts": 200,
+        "/forecasts/status": 200,
+        "/forecasts/summary": 200,
+        "/stats/dashboard": 200,
+        "/stats/production?group_by=variety": 200,
+        "/harvests?variety_id=1&date_from=2026-02-01&date_to=2026-02-28": 200,
+        "POST /forecasts/generate (preview)": 200
+      },
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-20",
+      "title": "UNIQUE unique_harvest_crop_date: a second harvest for the same crop and day is refused, so vw_forecast_status keeps one row per forecast",
+      "expected": "1062, rows 1",
+      "actual": "1062, rows 1 -> 1",
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-01",
+      "title": "Valid rows accepted (incl. estimated_quantity = 0)",
+      "expected": "accepted",
+      "actual": "accepted",
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-02",
+      "title": "FK: Lot with nonexistent farm",
+      "expected": [
+        1452
+      ],
+      "actual": 1452,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-03",
+      "title": "FK: Crop with nonexistent variety",
+      "expected": [
+        1452
+      ],
+      "actual": 1452,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-04",
+      "title": "FK: Harvest with nonexistent season",
+      "expected": [
+        1452
+      ],
+      "actual": 1452,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-05",
+      "title": "FK: Forecast with nonexistent crop",
+      "expected": [
+        1452
+      ],
+      "actual": 1452,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-06",
+      "title": "FK RESTRICT: delete a farm that has lots",
+      "expected": [
+        1451
+      ],
+      "actual": 1451,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-07",
+      "title": "FK RESTRICT: delete a crop with harvests",
+      "expected": [
+        1451
+      ],
+      "actual": 1451,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-08",
+      "title": "FK RESTRICT: update a referenced season id",
+      "expected": [
+        1451
+      ],
+      "actual": 1451,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-09",
+      "title": "CHECK Harvest_chk_1: quantity = 0",
+      "expected": [
+        3819
+      ],
+      "actual": 3819,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-10",
+      "title": "CHECK Harvest_chk_1: quantity < 0",
+      "expected": [
+        3819
+      ],
+      "actual": 3819,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-11",
+      "title": "CHECK Season_chk_1: end before start",
+      "expected": [
+        3819
+      ],
+      "actual": 3819,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-12",
+      "title": "CHECK Forecast_chk_1: negative estimate",
+      "expected": [
+        3819
+      ],
+      "actual": 3819,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-13",
+      "title": "UNIQUE unique_crop_forecast_date",
+      "expected": [
+        1062
+      ],
+      "actual": 1062,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-14",
+      "title": "Trigger validate_harvest_season (INSERT)",
+      "expected": [
+        1644
+      ],
+      "actual": 1644,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-15",
+      "title": "Trigger validate_harvest_season_update",
+      "expected": [
+        1644
+      ],
+      "actual": 1644,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-16",
+      "title": "Trigger validate_forecast_season (INSERT)",
+      "expected": [
+        1644
+      ],
+      "actual": 1644,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-17",
+      "title": "Trigger validate_forecast_season_update",
+      "expected": [
+        1644
+      ],
+      "actual": 1644,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-18",
+      "title": "NOT NULL: RoseVariety.name",
+      "expected": [
+        1048
+      ],
+      "actual": 1048,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-19",
+      "title": "Type/range: quantity above INT range",
+      "expected": [
+        1264
+      ],
+      "actual": 1264,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-02",
+      "id": "NFR-02-21",
+      "title": "Constraint tests left no rows (rolled back)",
+      "expected": 0,
+      "actual": 0,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-06",
+      "id": "SEC-01",
+      "title": "Every protected operation (7 resources x 5 operations x 3 bad credentials) is refused with 401",
+      "expected": "105 x 401",
+      "actual": "105 x 401",
+      "result": "PASS",
+      "detail": []
+    },
+    {
+      "section": "NFR-06",
+      "id": "SEC-02",
+      "title": "Refused requests did not change the database",
+      "expected": {
+        "Farm": 2,
+        "Lot": 6,
+        "RoseVariety": 7,
+        "Crop": 8,
+        "Season": 5,
+        "Harvest": 22,
+        "Forecast": 8
+      },
+      "actual": {
+        "Farm": 2,
+        "Lot": 6,
+        "RoseVariety": 7,
+        "Crop": 8,
+        "Season": 5,
+        "Harvest": 22,
+        "Forecast": 8
+      },
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-06",
+      "id": "SEC-03",
+      "title": "Valid key reads all 7 resources",
+      "expected": 200,
+      "actual": "all 200",
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-06",
+      "id": "SEC-04",
+      "title": "GUI login with a wrong key",
+      "expected": 401,
+      "actual": 401,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-06",
+      "id": "SEC-05",
+      "title": "GUI login sets an HttpOnly SameSite=Strict cookie that does not contain the key",
+      "expected": "200 + HttpOnly + SameSite=Strict",
+      "actual": "200 HttpOnly=True Strict=True key_in_cookie=False",
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-06",
+      "id": "SEC-06",
+      "title": "Session write without the GUI header is refused (CSRF protection)",
+      "expected": 403,
+      "actual": 403,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-06",
+      "id": "SEC-07",
+      "title": "Session write with the GUI header is accepted",
+      "expected": 201,
+      "actual": 201,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-06",
+      "id": "SEC-08",
+      "title": "After logout the session no longer works",
+      "expected": 401,
+      "actual": 401,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-06",
+      "id": "SEC-09",
+      "title": "No CORS: cross-origin requests get no Access-Control-Allow-Origin",
+      "expected": null,
+      "actual": null,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-06",
+      "id": "SEC-10.1",
+      "title": "Injection probe /harvests?crop_id=1%20OR%201%3D1",
+      "expected": 400,
+      "actual": 400,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-06",
+      "id": "SEC-10.2",
+      "title": "Injection probe /harvests?date_from=2026-01-01'%20OR%20'1'='1",
+      "expected": 400,
+      "actual": 400,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-06",
+      "id": "SEC-10.3",
+      "title": "Injection probe /stats/production?group_by=variety;DROP%20TABLE%20Farm",
+      "expected": 400,
+      "actual": 400,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-06",
+      "id": "SEC-10.4",
+      "title": "Injection probe /farms/1%20OR%201=1",
+      "expected": 404,
+      "actual": 404,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-06",
+      "id": "SEC-11",
+      "title": "SQL text in a field is stored literally (parameterised queries)",
+      "expected": "stored literally, Farm still exists",
+      "actual": "stored_equal=True farm_table=1",
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-06",
+      "id": "SEC-12",
+      "title": "Malformed JSON gives a JSON 400 without stack trace or driver details",
+      "expected": "400, no trace",
+      "actual": "400, leaked=False",
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-06",
+      "id": "SEC-13",
+      "title": "Request body above 1 MiB rejected",
+      "expected": 413,
+      "actual": 413,
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-06",
+      "id": "SEC-14",
+      "title": "API key absent from the served GUI (HTML + JS + CSS bundles)",
+      "expected": [],
+      "actual": [],
+      "result": "PASS",
+      "assets": [
+        "/app/favicon.svg",
+        "/app/assets/index-57GBSTBk.js",
+        "/app/assets/index-CL6YbocT.css"
+      ]
+    },
+    {
+      "section": "NFR-06",
+      "id": "SEC-15",
+      "title": "Path traversal does not serve .env",
+      "expected": "no secrets",
+      "actual": "200",
+      "result": "PASS"
+    },
+    {
+      "section": "NFR-06",
+      "id": "SEC-16",
+      "title": "Security headers on API responses",
+      "expected": "nosniff, DENY, CSP, no-store",
+      "actual": {
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "Cache-Control": "no-store"
+      },
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Farm:POST",
+      "title": "POST /farms",
+      "expected": 201,
+      "actual": 201,
+      "result": "PASS",
+      "db_effect": {
+        "farm_id": 293,
+        "name": "AUDIT_fbe818b0_Farm",
+        "location": "Audit location"
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "Farm:GET all",
+      "title": "GET /farms",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "Farm:GET by id",
+      "title": "GET /farms/293",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "Farm:PUT",
+      "title": "PUT /farms/293",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": {
+        "farm_id": 293,
+        "name": "AUDIT_fbe818b0_Farm2",
+        "location": "Updated"
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "Lot:POST",
+      "title": "POST /lots",
+      "expected": 201,
+      "actual": 201,
+      "result": "PASS",
+      "db_effect": {
+        "lot_id": 272,
+        "farm_id": 293,
+        "name": "AUDIT_fbe818b0_Lot",
+        "area": 2.5
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "Lot:GET all",
+      "title": "GET /lots",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "Lot:GET by id",
+      "title": "GET /lots/272",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "Lot:PUT",
+      "title": "PUT /lots/272",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": {
+        "lot_id": 272,
+        "farm_id": 293,
+        "name": "AUDIT_fbe818b0_Lot2",
+        "area": 3.75
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "RoseVariety:POST",
+      "title": "POST /varieties",
+      "expected": 201,
+      "actual": 201,
+      "result": "PASS",
+      "db_effect": {
+        "variety_id": 289,
+        "name": "AUDIT_fbe818b0_Variety",
+        "color": "Purple"
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "RoseVariety:GET all",
+      "title": "GET /varieties",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "RoseVariety:GET by id",
+      "title": "GET /varieties/289",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "RoseVariety:PUT",
+      "title": "PUT /varieties/289",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": {
+        "variety_id": 289,
+        "name": "AUDIT_fbe818b0_Variety2",
+        "color": "Red"
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "Crop:POST",
+      "title": "POST /crops",
+      "expected": 201,
+      "actual": 201,
+      "result": "PASS",
+      "db_effect": {
+        "crop_id": 234,
+        "lot_id": 272,
+        "variety_id": 289,
+        "planting_date": "2000-06-01"
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "Crop:GET all",
+      "title": "GET /crops",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "Crop:GET by id",
+      "title": "GET /crops/234",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "Crop:PUT",
+      "title": "PUT /crops/234",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": {
+        "planting_date": "2000-05-01"
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "Season:POST",
+      "title": "POST /seasons",
+      "expected": 201,
+      "actual": 201,
+      "result": "PASS",
+      "db_effect": {
+        "season_id": 234,
+        "name": "AUDIT_fbe818b0_Season",
+        "start_date": "2001-02-01",
+        "end_date": "2001-02-14"
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "Season:GET all",
+      "title": "GET /seasons",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "Season:GET by id",
+      "title": "GET /seasons/234",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "Season:PUT",
+      "title": "PUT /seasons/234",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": {
+        "season_id": 234,
+        "name": "AUDIT_fbe818b0_Season2",
+        "start_date": "2001-02-01",
+        "end_date": "2001-02-28"
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "Harvest:POST",
+      "title": "POST /harvests",
+      "expected": 201,
+      "actual": 201,
+      "result": "PASS",
+      "db_effect": {
+        "harvest_id": 320,
+        "crop_id": 234,
+        "season_id": 234,
+        "harvest_date": "2001-02-05",
+        "quantity": 1234
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "Harvest:GET all",
+      "title": "GET /harvests",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "Harvest:GET by id",
+      "title": "GET /harvests/320",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "Harvest:PUT",
+      "title": "PUT /harvests/320",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": {
+        "harvest_id": 320,
+        "crop_id": 234,
+        "season_id": 234,
+        "harvest_date": "2001-02-06",
+        "quantity": 1300
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "Forecast:POST",
+      "title": "POST /forecasts",
+      "expected": 201,
+      "actual": 201,
+      "result": "PASS",
+      "db_effect": {
+        "forecast_id": 86,
+        "crop_id": 234,
+        "season_id": 234,
+        "forecast_date": "2001-02-20",
+        "estimated_quantity": 1500.5,
+        "method": "Audit manual"
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "Forecast:GET all",
+      "title": "GET /forecasts",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "Forecast:GET by id",
+      "title": "GET /forecasts/86",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "Forecast:PUT",
+      "title": "PUT /forecasts/86",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": {
+        "forecast_id": 86,
+        "crop_id": 234,
+        "season_id": 234,
+        "forecast_date": "2001-02-21",
+        "estimated_quantity": 0.0,
+        "method": "Audit manual v2"
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "Farm:POST missing fields",
+      "title": "POST /farms",
+      "expected": 400,
+      "actual": 400,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Farm:POST invalid type",
+      "title": "POST /farms",
+      "expected": 400,
+      "actual": 400,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Farm:GET missing id",
+      "title": "GET /farms/999999999",
+      "expected": 404,
+      "actual": 404,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Farm:PUT missing id",
+      "title": "PUT /farms/999999999",
+      "expected": 404,
+      "actual": 404,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Farm:DELETE in use (has lot)",
+      "title": "DELETE /farms/293",
+      "expected": 409,
+      "actual": 409,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Lot:POST invalid FK farm",
+      "title": "POST /lots",
+      "expected": 400,
+      "actual": 400,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Lot:POST area <= 0",
+      "title": "POST /lots",
+      "expected": 400,
+      "actual": 400,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Lot:DELETE missing id",
+      "title": "DELETE /lots/999999999",
+      "expected": 404,
+      "actual": 404,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Lot:DELETE in use (has crop)",
+      "title": "DELETE /lots/272",
+      "expected": 409,
+      "actual": 409,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "RoseVariety:POST too long",
+      "title": "POST /varieties",
+      "expected": 400,
+      "actual": 400,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "RoseVariety:DELETE in use (has crop)",
+      "title": "DELETE /varieties/289",
+      "expected": 409,
+      "actual": 409,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Crop:POST invalid FK variety",
+      "title": "POST /crops",
+      "expected": 400,
+      "actual": 400,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Crop:POST invalid date",
+      "title": "POST /crops",
+      "expected": 400,
+      "actual": 400,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Crop:DELETE in use (has harvest)",
+      "title": "DELETE /crops/234",
+      "expected": 409,
+      "actual": 409,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Season:POST end before start",
+      "title": "POST /seasons",
+      "expected": 400,
+      "actual": 400,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Season:DELETE in use (has harvest)",
+      "title": "DELETE /seasons/234",
+      "expected": 409,
+      "actual": 409,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Harvest:POST quantity 0",
+      "title": "POST /harvests",
+      "expected": 400,
+      "actual": 400,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Harvest:POST quantity not integer",
+      "title": "POST /harvests",
+      "expected": 400,
+      "actual": 400,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Harvest:POST outside season",
+      "title": "POST /harvests",
+      "expected": 400,
+      "actual": 400,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Harvest:POST invalid FK crop",
+      "title": "POST /harvests",
+      "expected": 400,
+      "actual": 400,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Harvest:POST duplicate crop+day",
+      "title": "POST /harvests",
+      "expected": 409,
+      "actual": 409,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Forecast:POST negative estimate",
+      "title": "POST /forecasts",
+      "expected": 400,
+      "actual": 400,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Forecast:POST duplicate crop+date",
+      "title": "POST /forecasts",
+      "expected": 409,
+      "actual": 409,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Forecast:POST invalid FK season",
+      "title": "POST /forecasts",
+      "expected": 400,
+      "actual": 400,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Forecast:PUT missing id",
+      "title": "PUT /forecasts/999999999",
+      "expected": 404,
+      "actual": 404,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Harvest:POST invalid JSON",
+      "title": "POST /harvests",
+      "expected": 400,
+      "actual": 400,
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "NEG-DB",
+      "title": "Rejected requests did not change any table",
+      "expected": {
+        "Farm": 3,
+        "Lot": 7,
+        "RoseVariety": 10,
+        "Crop": 9,
+        "Season": 6,
+        "Harvest": 23,
+        "Forecast": 9
+      },
+      "actual": {
+        "Farm": 3,
+        "Lot": 7,
+        "RoseVariety": 10,
+        "Crop": 9,
+        "Season": 6,
+        "Harvest": 23,
+        "Forecast": 9
+      },
+      "result": "PASS"
+    },
+    {
+      "section": "CRUD",
+      "id": "Forecast:DELETE",
+      "title": "DELETE /forecasts/86",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": {
+        "n": 0
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "Forecast:GET after DELETE",
+      "title": "GET /forecasts/86",
+      "expected": 404,
+      "actual": 404,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "Harvest:DELETE",
+      "title": "DELETE /harvests/320",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": {
+        "n": 0
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "Harvest:GET after DELETE",
+      "title": "GET /harvests/320",
+      "expected": 404,
+      "actual": 404,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "Crop:DELETE",
+      "title": "DELETE /crops/234",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": {
+        "n": 0
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "Crop:GET after DELETE",
+      "title": "GET /crops/234",
+      "expected": 404,
+      "actual": 404,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "Season:DELETE",
+      "title": "DELETE /seasons/234",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": {
+        "n": 0
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "Season:GET after DELETE",
+      "title": "GET /seasons/234",
+      "expected": 404,
+      "actual": 404,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "Lot:DELETE",
+      "title": "DELETE /lots/272",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": {
+        "n": 0
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "Lot:GET after DELETE",
+      "title": "GET /lots/272",
+      "expected": 404,
+      "actual": 404,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "RoseVariety:DELETE",
+      "title": "DELETE /varieties/289",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": {
+        "n": 0
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "RoseVariety:GET after DELETE",
+      "title": "GET /varieties/289",
+      "expected": 404,
+      "actual": 404,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "Farm:DELETE",
+      "title": "DELETE /farms/293",
+      "expected": 200,
+      "actual": 200,
+      "result": "PASS",
+      "db_effect": {
+        "n": 0
+      }
+    },
+    {
+      "section": "CRUD",
+      "id": "Farm:GET after DELETE",
+      "title": "GET /farms/293",
+      "expected": 404,
+      "actual": 404,
+      "result": "PASS",
+      "db_effect": null
+    },
+    {
+      "section": "CRUD",
+      "id": "REAL-GET",
+      "title": "GET by id of the first real record of each table returns it",
+      "expected": "7 x 200",
+      "actual": [
+        [
+          "/farms",
+          1,
+          200,
+          true
+        ],
+        [
+          "/lots",
+          1,
+          200,
+          true
+        ],
+        [
+          "/varieties",
+          1,
+          200,
+          true
+        ],
+        [
+          "/crops",
+          1,
+          200,
+          true
+        ],
+        [
+          "/seasons",
+          1,
+          200,
+          true
+        ],
+        [
+          "/harvests",
+          1,
+          200,
+          true
+        ],
+        [
+          "/forecasts",
+          1,
+          200,
+          true
+        ]
+      ],
+      "result": "PASS"
+    },
+    {
+      "section": "FR-03",
+      "id": "FR-03-01",
+      "title": "Harvest registered with date, lot, variety and quantity; SQL join and API agree",
+      "expected": {
+        "date": "2001-02-02",
+        "lot": "AUDIT_fbe818b0_LotA",
+        "variety": "AUDIT_fbe818b0_VarA",
+        "quantity": 1000
+      },
+      "actual": {
+        "sql": {
+          "harvest_date": "2001-02-02",
+          "quantity": 1000,
+          "lot": "AUDIT_fbe818b0_LotA",
+          "variety": "AUDIT_fbe818b0_VarA",
+          "season": "AUDIT_fbe818b0_Valentine"
+        },
+        "api": {
+          "date": "2001-02-02",
+          "lot": "AUDIT_fbe818b0_LotA",
+          "variety": "AUDIT_fbe818b0_VarA",
+          "quantity": 1000
+        }
+      },
+      "result": "PASS"
+    },
+    {
+      "section": "FR-03",
+      "id": "FR-03-02",
+      "title": "Harvest before the crop's planting date rejected",
+      "expected": "400 DATE_BEFORE_PLANTING",
+      "actual": "400 DATE_BEFORE_PLANTING",
+      "result": "PASS"
+    },
+    {
+      "section": "FR-03",
+      "id": "FR-03-03",
+      "title": "Harvest dated in the future (inside a valid season) rejected",
+      "expected": "400 FUTURE_HARVEST_DATE",
+      "actual": "400 FUTURE_HARVEST_DATE",
+      "result": "PASS"
+    },
+    {
+      "section": "FR-03",
+      "id": "FR-03-04",
+      "title": "Second harvest for the same crop and day rejected",
+      "expected": "409 DUPLICATE_RECORD",
+      "actual": "409 DUPLICATE_RECORD",
+      "result": "PASS"
+    },
+    {
+      "section": "FR-05",
+      "id": "FR-05-01",
+      "title": "Historical production filtered by date range",
+      "expected": [
+        322,
+        323,
+        325
+      ],
+      "actual": [
+        322,
+        323,
+        325
+      ],
+      "result": "PASS"
+    },
+    {
+      "section": "FR-05",
+      "id": "FR-05-02",
+      "title": "Historical production filtered by single date",
+      "expected": [
+        322
+      ],
+      "actual": [
+        322
+      ],
+      "result": "PASS"
+    },
+    {
+      "section": "FR-05",
+      "id": "FR-05-03",
+      "title": "Historical production filtered by rose variety",
+      "expected": [
+        325,
+        326
+      ],
+      "actual": [
+        325,
+        326
+      ],
+      "result": "PASS"
+    },
+    {
+      "section": "FR-05",
+      "id": "FR-05-04",
+      "title": "Historical production filtered by cultivation lot",
+      "expected": [
+        321,
+        322,
+        323,
+        324
+      ],
+      "actual": [
+        321,
+        322,
+        323,
+        324
+      ],
+      "result": "PASS"
+    },
+    {
+      "section": "FR-05",
+      "id": "FR-05-05",
+      "title": "Historical production filtered by season",
+      "expected": [
+        324,
+        326
+      ],
+      "actual": [
+        324,
+        326
+      ],
+      "result": "PASS"
+    },
+    {
+      "section": "FR-05",
+      "id": "FR-05-06",
+      "title": "Historical production filtered combined: variety + season",
+      "expected": [
+        321,
+        322,
+        323
+      ],
+      "actual": [
+        321,
+        322,
+        323
+      ],
+      "result": "PASS"
+    },
+    {
+      "section": "FR-05",
+      "id": "FR-05-07",
+      "title": "Every variety/lot/season filter on the full data set matches an independent SQL count",
+      "expected": "no mismatch",
+      "actual": "no mismatch",
+      "result": "PASS"
+    },
+    {
+      "section": "FR-06",
+      "id": "FR-06-01",
+      "title": "Total/average/min/max for known data (variety A: 1000, 1300, 1600, 1250)",
+      "expected": {
+        "total": 5150,
+        "average": 1287.5,
+        "minimum": 1000,
+        "maximum": 1600,
+        "records": 4
+      },
+      "actual": {
+        "total": 5150,
+        "average": 1287.5,
+        "minimum": 1000,
+        "maximum": 1600,
+        "records": 4
+      },
+      "result": "PASS"
+    },
+    {
+      "section": "FR-06",
+      "id": "FR-06-02",
+      "title": "Statistics grouped by lot for a date range",
+      "expected": {
+        "total": 1700,
+        "average": 850.0,
+        "minimum": 800,
+        "maximum": 900
+      },
+      "actual": {
+        "total": 1700,
+        "average": 850.0,
+        "minimum": 800,
+        "maximum": 900
+      },
+      "result": "PASS"
+    },
+    {
+      "section": "FR-06",
+      "id": "FR-06-03",
+      "title": "Statistics of every variety in the full data set match an independent SQL aggregate",
+      "expected": "no difference",
+      "actual": "no difference",
+      "result": "PASS"
+    },
+    {
+      "section": "FR-06",
+      "id": "FR-06-04",
+      "title": "Dashboard total equals SUM(quantity)",
+      "expected": 37630,
+      "actual": 37630,
+      "result": "PASS"
+    },
+    {
+      "section": "FR-07",
+      "id": "FR-07-01",
+      "title": "Forecast for a FUTURE date = mean of the 3 latest earlier harvests of the crop",
+      "expected": {
+        "status": 200,
+        "estimate": 1383.33,
+        "history": [
+          1250,
+          1600,
+          1300
+        ]
+      },
+      "actual": {
+        "status": 200,
+        "estimate": 1383.33,
+        "history": [
+          1250,
+          1600,
+          1300
+        ],
+        "method": "Moving Average (3 records)",
+        "ms": 50.3
+      },
+      "result": "PASS"
+    },
+    {
+      "section": "FR-07",
+      "id": "FR-07-02",
+      "title": "Preview does not write",
+      "expected": 0,
+      "actual": 0,
+      "result": "PASS"
+    },
+    {
+      "section": "FR-07",
+      "id": "FR-07-03",
+      "title": "Only harvests before the forecast date are used (2 available -> refused)",
+      "expected": "400 INSUFFICIENT_HISTORY",
+      "actual": "400 INSUFFICIENT_HISTORY",
+      "result": "PASS"
+    },
+    {
+      "section": "FR-07",
+      "id": "FR-07-04",
+      "title": "Forecast date outside the season refused",
+      "expected": "400 DATE_OUTSIDE_SEASON",
+      "actual": "400 DATE_OUTSIDE_SEASON",
+      "result": "PASS"
+    },
+    {
+      "section": "FR-07",
+      "id": "FR-07-05",
+      "title": "Configurable window N=2",
+      "expected": 1425.0,
+      "actual": 1425.0,
+      "result": "PASS"
+    },
+    {
+      "section": "FR-07",
+      "id": "FR-07-06",
+      "title": "Preview on REAL history of crop #1 equals an independent SQL computation",
+      "expected": 1583.33,
+      "actual": 1583.33,
+      "result": "PASS"
+    },
+    {
+      "section": "FR-07",
+      "id": "FR-07-07",
+      "title": "The documented method (SQL recomputation) reproduces every stored 'Moving Average (3 records)' forecast",
+      "expected": 8,
+      "actual": 8,
+      "result": "PASS",
+      "not_reproduced": []
+    },
+    {
+      "section": "FR-08",
+      "id": "FR-08-01",
+      "title": "Generated forecast is persisted",
+      "expected": "row in Forecast",
+      "actual": {
+        "forecast_id": 87,
+        "crop_id": 235,
+        "season_id": 236,
+        "forecast_date": "2001-05-08",
+        "estimated_quantity": 1383.33,
+        "method": "Moving Average (3 records)"
+      },
+      "result": "PASS"
+    },
+    {
+      "section": "FR-08",
+      "id": "FR-08-02",
+      "title": "Retrieved forecast is Pending before any actual harvest",
+      "expected": "Pending / actual None",
+      "actual": "Pending / None",
+      "result": "PASS"
+    },
+    {
+      "section": "FR-08",
+      "id": "FR-08-03",
+      "title": "After the actual harvest the forecast is Evaluated with the correct absolute error",
+      "expected": {
+        "status": "Evaluated",
+        "actual": 1500,
+        "absolute_error": 116.67
+      },
+      "actual": {
+        "status": "Evaluated",
+        "actual": 1500,
+        "absolute_error": 116.67
+      },
+      "result": "PASS",
+      "actual_harvest_id": 327
+    },
+    {
+      "section": "FR-08",
+      "id": "FR-08-04",
+      "title": "vw_forecast_summary MAE/MAPE equal an independent computation from vw_forecast_status",
+      "expected": {
+        "MAE": 518.34,
+        "MAPE": 19.16,
+        "total": 9
+      },
+      "actual": {
+        "MAE": 518.34,
+        "MAPE": 19.16,
+        "total": 9
+      },
+      "result": "PASS"
+    },
+    {
+      "section": "FR-09",
+      "id": "FR-09-01",
+      "title": "Invalid references refused by the API (Lot->Farm, Crop->Lot, Harvest->Season, Forecast->Crop, update Harvest->Crop)",
+      "expected": [
+        400,
+        400,
+        400,
+        400,
+        400
+      ],
+      "actual": [
+        400,
+        400,
+        400,
+        400,
+        400
+      ],
+      "result": "PASS"
+    },
+    {
+      "section": "FR-09",
+      "id": "FR-09-02",
+      "title": "Parents with dependants cannot be deleted (Farm, RoseVariety, Season, Crop)",
+      "expected": [
+        409,
+        409,
+        409,
+        409
+      ],
+      "actual": [
+        409,
+        409,
+        409,
+        409
+      ],
+      "result": "PASS"
+    },
+    {
+      "section": "FR-09",
+      "id": "FR-09-03",
+      "title": "Database unchanged by refused operations",
+      "expected": {
+        "Farm": 3,
+        "Lot": 8,
+        "RoseVariety": 11,
+        "Crop": 10,
+        "Season": 9,
+        "Harvest": 29,
+        "Forecast": 9
+      },
+      "actual": {
+        "Farm": 3,
+        "Lot": 8,
+        "RoseVariety": 11,
+        "Crop": 10,
+        "Season": 9,
+        "Harvest": 29,
+        "Forecast": 9
+      },
+      "result": "PASS"
+    },
+    {
+      "section": "FR-02",
+      "id": "FR-02-01",
+      "title": "Lots are associated with their farm (farm detail lists them)",
+      "expected": [
+        273,
+        274
+      ],
+      "actual": [
+        273,
+        274
+      ],
+      "result": "PASS"
+    },
+    {
+      "section": "FR-04",
+      "id": "FR-04-01",
+      "title": "A season cannot be shrunk so that its harvests fall outside it",
+      "expected": 409,
+      "actual": 409,
+      "result": "PASS"
+    },
+    {
+      "section": "FR-01",
+      "id": "FR-01-01",
+      "title": "A second variety with the same name (any colour, any case) is refused (rule of 2026-11-23)",
+      "expected": "409 DUPLICATE_RECORD",
+      "actual": "409 DUPLICATE_RECORD",
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-DB",
+      "title": "UNIQUE constraints present in the database",
+      "expected": [
+        "unique_crop_forecast_date",
+        "unique_farm_name_location",
+        "unique_harvest_crop_date",
+        "unique_lot_farm_name",
+        "unique_season_name_dates"
+      ],
+      "actual": [
+        "unique_crop_forecast_date",
+        "unique_farm_name_location",
+        "unique_harvest_crop_date",
+        "unique_lot_farm_name",
+        "unique_season_name_dates"
+      ],
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-01",
+      "title": "Farm: exact and normalized duplicates refused, no row added",
+      "expected": "409 x 2, count 1",
+      "actual": "['409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 1 -> 1",
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-01L",
+      "title": "Farm: legitimate similar record accepted",
+      "expected": 201,
+      "actual": 201,
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-02",
+      "title": "Lot: exact and normalized duplicates refused, no row added",
+      "expected": "409 x 2, count 1",
+      "actual": "['409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 1 -> 1",
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-02L",
+      "title": "Lot: legitimate similar record accepted",
+      "expected": 201,
+      "actual": 201,
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-03",
+      "title": "RoseVariety: exact and normalized duplicates refused, no row added",
+      "expected": "409 x 3, count 1",
+      "actual": "['409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 1 -> 1",
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-04",
+      "title": "Crop: exact and normalized duplicates refused, no row added",
+      "expected": "409 x 1, count 1",
+      "actual": "['409 DUPLICATE_RECORD'], count 1 -> 1",
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-04L",
+      "title": "Crop: legitimate similar record accepted",
+      "expected": 201,
+      "actual": 201,
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-05",
+      "title": "Season: exact and normalized duplicates refused, no row added",
+      "expected": "409 x 2, count 1",
+      "actual": "['409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 1 -> 1",
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-05L",
+      "title": "Season: legitimate similar record accepted",
+      "expected": 201,
+      "actual": 201,
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-06",
+      "title": "Harvest: exact and normalized duplicates refused, no row added",
+      "expected": "409 x 2, count 1",
+      "actual": "['409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 1 -> 1",
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-06L",
+      "title": "Harvest: legitimate similar record accepted",
+      "expected": 201,
+      "actual": 201,
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-07",
+      "title": "Forecast: exact and normalized duplicates refused, no row added",
+      "expected": "409 x 1, count 1",
+      "actual": "['409 DUPLICATE_RECORD'], count 1 -> 1",
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-07L",
+      "title": "Forecast: legitimate similar record accepted",
+      "expected": 201,
+      "actual": 201,
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-07G",
+      "title": "Forecast: saving a generated forecast for an existing crop/date is refused and does not overwrite it",
+      "expected": "409, stored 7.00",
+      "actual": "409, stored 7.00",
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-08",
+      "title": "PUT keeping its own unique values is accepted; PUT to another record's values is refused",
+      "expected": "200, 409",
+      "actual": "200, 409",
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-R1",
+      "title": "Farm: 8 identical concurrent POSTs create exactly one row",
+      "expected": "1 x 201, count +1",
+      "actual": "['201', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 0 -> 1",
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-R2",
+      "title": "Lot: 8 identical concurrent POSTs create exactly one row",
+      "expected": "1 x 201, count +1",
+      "actual": "['201', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 0 -> 1",
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-R3",
+      "title": "RoseVariety: 8 identical concurrent POSTs create exactly one row",
+      "expected": "1 x 201, count +1",
+      "actual": "['201', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 0 -> 1",
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-R4",
+      "title": "Crop: 8 identical concurrent POSTs create exactly one row",
+      "expected": "1 x 201, count +1",
+      "actual": "['201', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 2 -> 3",
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-R5",
+      "title": "Season: 8 identical concurrent POSTs create exactly one row",
+      "expected": "1 x 201, count +1",
+      "actual": "['201', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 0 -> 1",
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-R6",
+      "title": "Harvest: 8 identical concurrent POSTs create exactly one row",
+      "expected": "1 x 201, count +1",
+      "actual": "['201', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 2 -> 3",
+      "result": "PASS"
+    },
+    {
+      "section": "DUP",
+      "id": "DUP-R7",
+      "title": "Forecast: 8 identical concurrent POSTs create exactly one row",
+      "expected": "1 x 201, count +1",
+      "actual": "['201', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 2 -> 3",
+      "result": "PASS"
+    },
+    {
+      "section": "GUARD",
+      "id": "GUARD-01",
+      "title": "Every pre-existing row unchanged and no audit row left behind",
+      "expected": "no difference",
+      "actual": "no difference",
+      "result": "PASS",
+      "rows_checked": 58
+    },
+    {
+      "section": "NFR-05",
+      "id": "NFR-05-01",
+      "title": "Schema unchanged after inserting and managing new varieties, lots, crops, seasons, harvests and forecasts",
+      "expected": "66c606e099f4c0efc42ef4eda6251733edb026cec50808bc55d5964e38836601",
+      "actual": "66c606e099f4c0efc42ef4eda6251733edb026cec50808bc55d5964e38836601",
+      "result": "PASS"
+    }
+  ],
+  "baseline_rows": {
+    "Farm": 2,
+    "Lot": 6,
+    "RoseVariety": 7,
+    "Crop": 8,
+    "Season": 5,
+    "Harvest": 22,
+    "Forecast": 8
+  },
+  "finished_at": "2026-11-23T12:44:22.208258-05:00",
+  "created_ids": {
+    "Farm": [
+      293,
+      294,
+      295,
+      296,
+      297,
+      298,
+      299
+    ],
+    "Lot": [
+      272,
+      273,
+      274,
+      275,
+      276,
+      277
+    ],
+    "RoseVariety": [
+      287,
+      288,
+      289,
+      290,
+      291,
+      292,
+      293,
+      294
+    ],
+    "Crop": [
+      234,
+      235,
+      236,
+      237,
+      238,
+      239
+    ],
+    "Season": [
+      234,
+      235,
+      236,
+      237,
+      238,
+      239,
+      240,
+      241
+    ],
+    "Harvest": [
+      320,
+      321,
+      322,
+      323,
+      324,
+      325,
+      326,
+      327,
+      328,
+      329,
+      330
+    ],
+    "Forecast": [
+      86,
+      87,
+      88,
+      89,
+      90
+    ]
+  },
+  "summary": {
+    "PASS": 178,
+    "FINDING": 7
+  }
+}

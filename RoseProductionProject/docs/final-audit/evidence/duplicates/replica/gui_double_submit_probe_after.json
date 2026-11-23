@@ -1,0 +1,27 @@
+{
+ "description": "Same probe AFTER the fix (bundle index-57GBSTBk.js, API 1.2.0) on the cloud replica, 2026-11-23 12:35 -05:00.",
+ "dblclick_posts": 1,
+ "enter_twice_posts": 1,
+ "same_task_two_clicks_posts": 1,
+ "same_task_two_submits_posts": 1,
+ "rows_created": [
+  [
+   991,
+   "DBLPROBE_1795455264525_dbl"
+  ],
+  [
+   992,
+   "DBLPROBE_1795455264525_enter"
+  ],
+  [
+   993,
+   "DBLPROBE_1795455264525_sync"
+  ],
+  [
+   994,
+   "DBLPROBE_1795455264525_req"
+  ]
+ ],
+ "varieties_after_cleanup": 7,
+ "interpretation": "Every action now sends exactly one POST and creates one row: the synchronous lock in ResourceFormModal blocks the second activation even when it arrives before React re-renders."
+}

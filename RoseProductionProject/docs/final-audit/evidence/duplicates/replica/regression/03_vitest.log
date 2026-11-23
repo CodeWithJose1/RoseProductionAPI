@@ -1,0 +1,21 @@
+
+ RUN  v5.1.1 /home/claude/rose/frontend
+
+ ✓ src/__tests__/duplicates.test.jsx (11 tests) 722ms
+ ✓ src/__tests__/crud.test.jsx (12 tests) 1684ms
+   ✓ rose variety CRUD (2)
+     ✓ creates, edits and deletes a variety through the API 438ms
+ ✓ src/__tests__/app.test.jsx (17 tests) 995ms
+ ✓ src/__tests__/components.test.jsx (11 tests) 440ms
+ ✓ src/__tests__/client.test.js (13 tests) 13ms
+ ✓ src/__tests__/utils.test.js (8 tests) 6ms
+
+ Test Files  6 passed (6)
+      Tests  72 passed (72)
+   Start at  12:34:52
+   Duration  7.86s (tests 52%, environment 27%, import 13%, setup 6%, transform 2%)
+
+    Isolate  6 workers spawned · ~401ms startup each (spawn + environment, per file)
+             at least ~2.01s faster with isolate: false — reuses workers across files instead of one per file
+
+JSON report written to /home/claude/rose/docs/final-audit/evidence/duplicates/replica/regression/vitest.json

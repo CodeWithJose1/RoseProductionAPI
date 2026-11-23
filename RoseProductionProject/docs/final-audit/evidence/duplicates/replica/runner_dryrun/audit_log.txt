@@ -1,0 +1,196 @@
+[12:32:18] Final audit 3f4146b8 against http://127.0.0.1:7003
+[12:32:18] --- environment
+[12:32:18] PASS ENV ENV-01 API reachable and public home endpoint -> 200
+[12:32:18] PASS ENV ENV-02 API runs the audited code version -> 1.2.0
+[12:32:18] PASS ENV ENV-03 Backend connected to MySQL 8 RoseProductionDB -> 8.0.46-0ubuntu0.24.04.5 / RoseProductionDB
+[12:32:18] --- schema
+[12:32:18] PASS SCHEMA SCH-01 Seven entity tables exist (InnoDB) -> ['Crop', 'Farm', 'Forecast', 'Harvest', 'Lot', 'RoseVariety', 'Season']
+[12:32:18] PASS SCHEMA SCH-02 Both views exist -> ['vw_forecast_status', 'vw_forecast_summary']
+[12:32:18] PASS SCHEMA SCH-03 SQLAlchemy models match the MySQL schema (columns, types, nullability, PK, FK, named constraints, index) -> no mismatch
+[12:32:18] --- data_quality
+[12:32:18] PASS DATA DQ-01 No orphan rows in the 7 relationships -> {'Lot->Farm': 0, 'Crop->Lot': 0, 'Crop->RoseVariety': 0, 'Harvest->Crop': 0, 'Harvest->Season': 0, 'Forecast->Crop': 0, 'Forecast->Season': 0}
+[12:32:18] PASS DATA DQ-02 Existing rows satisfy the database rules -> {'harvest quantity <= 0': 0, 'forecast estimate < 0': 0, 'season end < start': 0, 'harvest outside its season': 0, 'forecast outside its season': 0}
+[12:32:18] FIND DATA DQ-03 Harvests dated before their crop's planting date (not prevented by the schema) -> [{'harvest_id': 16, 'crop_id': 6, 'planting_date': '2026-02-15', 'harvest_date': '2026-01-20'}, {'harvest_id': 17, 'crop_id': 6, 'planting_date': '2026-02-15', 'harvest_date': '2026-01-22'}, {'harvest_id': 18, 'crop_id': 6, 'planting_date': '2026-02-15', 'harvest_date': '2026-01-24'}]
+[12:32:18] FIND DATA DQ-04 Forecasts dated before their crop's planting date -> [{'forecast_id': 7, 'crop_id': 6, 'planting_date': '2026-02-15', 'forecast_date': '2026-01-25'}]
+[12:32:18] FIND DATA DQ-05 Harvests dated in the future -> 0
+[12:32:18] FIND DATA DQ-06 More than one harvest for the same crop and day (would duplicate rows of vw_forecast_status) -> none
+[12:32:18] FIND DATA DQ-07 Rose varieties sharing a name (pre-existing; new ones are refused by the API since 2026-11-23) -> [{'name': 'quicksand', 'n': 2, 'ids': '6,7', 'colors': 'Peach'}]
+[12:32:18] FIND DATA DQ-08 Identical crops (same lot, variety and planting date; pre-existing, new ones refused by the API) -> [{'lot_id': 3, 'variety_id': 6, 'planting_date': '2026-11-15', 'n': 2, 'ids': '7,8'}]
+[12:32:18] FIND DATA DQ-09 Lots with area <= 0 (no CHECK in the schema; enforced by the API only) -> 0
+[12:32:18] --- performance
+[12:32:19] PASS NFR-01 PERF-01 Crop + date history query uses an index on (crop_id, harvest_date) -> type=range key=unique_harvest_crop_date rows=5
+[12:32:19] PASS NFR-01 PERF-02 Forecast history query uses an index on (crop_id, harvest_date) -> type=range key=unique_harvest_crop_date
+[12:32:19] PASS NFR-01 PERF-03 All measured API read endpoints answer 200 -> {'/farms': 200, '/lots': 200, '/varieties': 200, '/crops': 200, '/seasons': 200, '/harvests': 200, '/forecasts': 200, '/forecasts/status': 200, '/forecasts/summary': 200, '/stats/dashboard': 200, '/stats/production?group_by=variety': 200, '/harvests?variety_id=1&date_from=2026-02-01&date_to=2026-02-28': 200, 'POST /forecasts/generate (preview)': 200}
+[12:32:19] --- constraints
+[12:32:19] PASS NFR-02 NFR-02-20 UNIQUE unique_harvest_crop_date: a second harvest for the same crop and day is refused, so vw_forecast_status keeps one row per forecast -> 1062, rows 1 -> 1
+[12:32:19] PASS NFR-02 NFR-02-01 Valid rows accepted (incl. estimated_quantity = 0) -> accepted
+[12:32:19] PASS NFR-02 NFR-02-02 FK: Lot with nonexistent farm -> 1452
+[12:32:19] PASS NFR-02 NFR-02-03 FK: Crop with nonexistent variety -> 1452
+[12:32:19] PASS NFR-02 NFR-02-04 FK: Harvest with nonexistent season -> 1452
+[12:32:19] PASS NFR-02 NFR-02-05 FK: Forecast with nonexistent crop -> 1452
+[12:32:19] PASS NFR-02 NFR-02-06 FK RESTRICT: delete a farm that has lots -> 1451
+[12:32:19] PASS NFR-02 NFR-02-07 FK RESTRICT: delete a crop with harvests -> 1451
+[12:32:19] PASS NFR-02 NFR-02-08 FK RESTRICT: update a referenced season id -> 1451
+[12:32:19] PASS NFR-02 NFR-02-09 CHECK Harvest_chk_1: quantity = 0 -> 3819
+[12:32:19] PASS NFR-02 NFR-02-10 CHECK Harvest_chk_1: quantity < 0 -> 3819
+[12:32:19] PASS NFR-02 NFR-02-11 CHECK Season_chk_1: end before start -> 3819
+[12:32:19] PASS NFR-02 NFR-02-12 CHECK Forecast_chk_1: negative estimate -> 3819
+[12:32:19] PASS NFR-02 NFR-02-13 UNIQUE unique_crop_forecast_date -> 1062
+[12:32:19] PASS NFR-02 NFR-02-14 Trigger validate_harvest_season (INSERT) -> 1644
+[12:32:19] PASS NFR-02 NFR-02-15 Trigger validate_harvest_season_update -> 1644
+[12:32:19] PASS NFR-02 NFR-02-16 Trigger validate_forecast_season (INSERT) -> 1644
+[12:32:19] PASS NFR-02 NFR-02-17 Trigger validate_forecast_season_update -> 1644
+[12:32:19] PASS NFR-02 NFR-02-18 NOT NULL: RoseVariety.name -> 1048
+[12:32:19] PASS NFR-02 NFR-02-19 Type/range: quantity above INT range -> 1264
+[12:32:19] PASS NFR-02 NFR-02-21 Constraint tests left no rows (rolled back) -> 0
+[12:32:19] --- security
+[12:32:19] PASS NFR-06 SEC-01 Every protected operation (7 resources x 5 operations x 3 bad credentials) is refused with 401 -> 105 x 401
+[12:32:19] PASS NFR-06 SEC-02 Refused requests did not change the database -> {'Farm': 1, 'Lot': 3, 'RoseVariety': 7, 'Crop': 8, 'Season': 3, 'Harvest': 20, 'Forecast': 7}
+[12:32:19] PASS NFR-06 SEC-03 Valid key reads all 7 resources -> all 200
+[12:32:19] PASS NFR-06 SEC-04 GUI login with a wrong key -> 401
+[12:32:19] PASS NFR-06 SEC-05 GUI login sets an HttpOnly SameSite=Strict cookie that does not contain the key -> 200 HttpOnly=True Strict=True key_in_cookie=False
+[12:32:19] PASS NFR-06 SEC-06 Session write without the GUI header is refused (CSRF protection) -> 403
+[12:32:19] PASS NFR-06 SEC-07 Session write with the GUI header is accepted -> 201
+[12:32:19] PASS NFR-06 SEC-08 After logout the session no longer works -> 401
+[12:32:19] PASS NFR-06 SEC-09 No CORS: cross-origin requests get no Access-Control-Allow-Origin -> None
+[12:32:19] PASS NFR-06 SEC-10.1 Injection probe /harvests?crop_id=1%20OR%201%3D1 -> 400
+[12:32:19] PASS NFR-06 SEC-10.2 Injection probe /harvests?date_from=2026-01-01'%20OR%20'1'='1 -> 400
+[12:32:19] PASS NFR-06 SEC-10.3 Injection probe /stats/production?group_by=variety;DROP%20TABLE%20Farm -> 400
+[12:32:19] PASS NFR-06 SEC-10.4 Injection probe /farms/1%20OR%201=1 -> 404
+[12:32:19] PASS NFR-06 SEC-11 SQL text in a field is stored literally (parameterised queries) -> stored_equal=True farm_table=1
+[12:32:19] PASS NFR-06 SEC-12 Malformed JSON gives a JSON 400 without stack trace or driver details -> 400, leaked=False
+[12:32:19] PASS NFR-06 SEC-13 Request body above 1 MiB rejected -> 413
+[12:32:19] PASS NFR-06 SEC-14 API key absent from the served GUI (HTML + JS + CSS bundles) -> []
+[12:32:19] PASS NFR-06 SEC-15 Path traversal does not serve .env -> 200
+[12:32:19] PASS NFR-06 SEC-16 Security headers on API responses -> {'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'DENY', 'Cache-Control': 'no-store'}
+[12:32:19] --- crud
+[12:32:19] PASS CRUD Farm:POST POST /farms -> 201
+[12:32:19] PASS CRUD Farm:GET all GET /farms -> 200
+[12:32:19] PASS CRUD Farm:GET by id GET /farms/1010 -> 200
+[12:32:19] PASS CRUD Farm:PUT PUT /farms/1010 -> 200
+[12:32:19] PASS CRUD Lot:POST POST /lots -> 201
+[12:32:19] PASS CRUD Lot:GET all GET /lots -> 200
+[12:32:19] PASS CRUD Lot:GET by id GET /lots/909 -> 200
+[12:32:19] PASS CRUD Lot:PUT PUT /lots/909 -> 200
+[12:32:19] PASS CRUD RoseVariety:POST POST /varieties -> 201
+[12:32:19] PASS CRUD RoseVariety:GET all GET /varieties -> 200
+[12:32:19] PASS CRUD RoseVariety:GET by id GET /varieties/981 -> 200
+[12:32:19] PASS CRUD RoseVariety:PUT PUT /varieties/981 -> 200
+[12:32:19] PASS CRUD Crop:POST POST /crops -> 201
+[12:32:19] PASS CRUD Crop:GET all GET /crops -> 200
+[12:32:19] PASS CRUD Crop:GET by id GET /crops/784 -> 200
+[12:32:19] PASS CRUD Crop:PUT PUT /crops/784 -> 200
+[12:32:19] PASS CRUD Season:POST POST /seasons -> 201
+[12:32:19] PASS CRUD Season:GET all GET /seasons -> 200
+[12:32:19] PASS CRUD Season:GET by id GET /seasons/799 -> 200
+[12:32:19] PASS CRUD Season:PUT PUT /seasons/799 -> 200
+[12:32:19] PASS CRUD Harvest:POST POST /harvests -> 201
+[12:32:19] PASS CRUD Harvest:GET all GET /harvests -> 200
+[12:32:19] PASS CRUD Harvest:GET by id GET /harvests/1008 -> 200
+[12:32:19] PASS CRUD Harvest:PUT PUT /harvests/1008 -> 200
+[12:32:19] PASS CRUD Forecast:POST POST /forecasts -> 201
+[12:32:19] PASS CRUD Forecast:GET all GET /forecasts -> 200
+[12:32:19] PASS CRUD Forecast:GET by id GET /forecasts/258 -> 200
+[12:32:19] PASS CRUD Forecast:PUT PUT /forecasts/258 -> 200
+[12:32:19] PASS CRUD Farm:POST missing fields POST /farms -> 400
+[12:32:19] PASS CRUD Farm:POST invalid type POST /farms -> 400
+[12:32:19] PASS CRUD Farm:GET missing id GET /farms/999999999 -> 404
+[12:32:20] PASS CRUD Farm:PUT missing id PUT /farms/999999999 -> 404
+[12:32:20] PASS CRUD Farm:DELETE in use (has lot) DELETE /farms/1010 -> 409
+[12:32:20] PASS CRUD Lot:POST invalid FK farm POST /lots -> 400
+[12:32:20] PASS CRUD Lot:POST area <= 0 POST /lots -> 400
+[12:32:20] PASS CRUD Lot:DELETE missing id DELETE /lots/999999999 -> 404
+[12:32:20] PASS CRUD Lot:DELETE in use (has crop) DELETE /lots/909 -> 409
+[12:32:20] PASS CRUD RoseVariety:POST too long POST /varieties -> 400
+[12:32:20] PASS CRUD RoseVariety:DELETE in use (has crop) DELETE /varieties/981 -> 409
+[12:32:20] PASS CRUD Crop:POST invalid FK variety POST /crops -> 400
+[12:32:20] PASS CRUD Crop:POST invalid date POST /crops -> 400
+[12:32:20] PASS CRUD Crop:DELETE in use (has harvest) DELETE /crops/784 -> 409
+[12:32:20] PASS CRUD Season:POST end before start POST /seasons -> 400
+[12:32:20] PASS CRUD Season:DELETE in use (has harvest) DELETE /seasons/799 -> 409
+[12:32:20] PASS CRUD Harvest:POST quantity 0 POST /harvests -> 400
+[12:32:20] PASS CRUD Harvest:POST quantity not integer POST /harvests -> 400
+[12:32:20] PASS CRUD Harvest:POST outside season POST /harvests -> 400
+[12:32:20] PASS CRUD Harvest:POST invalid FK crop POST /harvests -> 400
+[12:32:20] PASS CRUD Harvest:POST duplicate crop+day POST /harvests -> 409
+[12:32:20] PASS CRUD Forecast:POST negative estimate POST /forecasts -> 400
+[12:32:20] PASS CRUD Forecast:POST duplicate crop+date POST /forecasts -> 409
+[12:32:20] PASS CRUD Forecast:POST invalid FK season POST /forecasts -> 400
+[12:32:20] PASS CRUD Forecast:PUT missing id PUT /forecasts/999999999 -> 404
+[12:32:20] PASS CRUD Harvest:POST invalid JSON POST /harvests -> 400
+[12:32:20] PASS CRUD NEG-DB Rejected requests did not change any table -> {'Farm': 2, 'Lot': 4, 'RoseVariety': 10, 'Crop': 9, 'Season': 4, 'Harvest': 21, 'Forecast': 8}
+[12:32:20] PASS CRUD Forecast:DELETE DELETE /forecasts/258 -> 200
+[12:32:20] PASS CRUD Forecast:GET after DELETE GET /forecasts/258 -> 404
+[12:32:20] PASS CRUD Harvest:DELETE DELETE /harvests/1008 -> 200
+[12:32:20] PASS CRUD Harvest:GET after DELETE GET /harvests/1008 -> 404
+[12:32:20] PASS CRUD Crop:DELETE DELETE /crops/784 -> 200
+[12:32:20] PASS CRUD Crop:GET after DELETE GET /crops/784 -> 404
+[12:32:20] PASS CRUD Season:DELETE DELETE /seasons/799 -> 200
+[12:32:20] PASS CRUD Season:GET after DELETE GET /seasons/799 -> 404
+[12:32:20] PASS CRUD Lot:DELETE DELETE /lots/909 -> 200
+[12:32:20] PASS CRUD Lot:GET after DELETE GET /lots/909 -> 404
+[12:32:20] PASS CRUD RoseVariety:DELETE DELETE /varieties/981 -> 200
+[12:32:20] PASS CRUD RoseVariety:GET after DELETE GET /varieties/981 -> 404
+[12:32:20] PASS CRUD Farm:DELETE DELETE /farms/1010 -> 200
+[12:32:20] PASS CRUD Farm:GET after DELETE GET /farms/1010 -> 404
+[12:32:20] PASS CRUD REAL-GET GET by id of the first real record of each table returns it -> [('/farms', 1, 200, True), ('/lots', 1, 200, True), ('/varieties', 1, 200, True), ('/crops', 1, 200, True), ('/seasons', 1, 200, True), ('/harvests', 1, 200, True), ('/forecasts', 1, 200, True)]
+[12:32:20] --- functional
+[12:32:20] PASS FR-03 FR-03-01 Harvest registered with date, lot, variety and quantity; SQL join and API agree -> {'sql': {'harvest_date': '2001-02-02', 'quantity': 1000, 'lot': 'AUDIT_3f4146b8_LotA', 'variety': 'AUDIT_3f4146b8_VarA', 'season': 'AUDIT_3f4146b8_Valentine'}, 'api': {'date': '2001-02-02', 'lot': 'AUDIT_3f4146b8_LotA', 'variety': 'AUDIT_3f4146b8_VarA', 'quantity': 1000}}
+[12:32:20] PASS FR-03 FR-03-02 Harvest before the crop's planting date rejected -> 400 DATE_BEFORE_PLANTING
+[12:32:20] PASS FR-03 FR-03-03 Harvest dated in the future (inside a valid season) rejected -> 400 FUTURE_HARVEST_DATE
+[12:32:20] PASS FR-03 FR-03-04 Second harvest for the same crop and day rejected -> 409 DUPLICATE_RECORD
+[12:32:20] PASS FR-05 FR-05-01 Historical production filtered by date range -> [1010, 1011, 1013]
+[12:32:20] PASS FR-05 FR-05-02 Historical production filtered by single date -> [1010]
+[12:32:20] PASS FR-05 FR-05-03 Historical production filtered by rose variety -> [1013, 1014]
+[12:32:20] PASS FR-05 FR-05-04 Historical production filtered by cultivation lot -> [1009, 1010, 1011, 1012]
+[12:32:20] PASS FR-05 FR-05-05 Historical production filtered by season -> [1012, 1014]
+[12:32:20] PASS FR-05 FR-05-06 Historical production filtered combined: variety + season -> [1009, 1010, 1011]
+[12:32:20] PASS FR-05 FR-05-07 Every variety/lot/season filter on the full data set matches an independent SQL count -> no mismatch
+[12:32:20] PASS FR-06 FR-06-01 Total/average/min/max for known data (variety A: 1000, 1300, 1600, 1250) -> {'total': 5150, 'average': 1287.5, 'minimum': 1000, 'maximum': 1600, 'records': 4}
+[12:32:20] PASS FR-06 FR-06-02 Statistics grouped by lot for a date range -> {'total': 1700, 'average': 850.0, 'minimum': 800, 'maximum': 900}
+[12:32:20] PASS FR-06 FR-06-03 Statistics of every variety in the full data set match an independent SQL aggregate -> no difference
+[12:32:20] PASS FR-06 FR-06-04 Dashboard total equals SUM(quantity) -> 33330
+[12:32:20] PASS FR-07 FR-07-01 Forecast for a FUTURE date = mean of the 3 latest earlier harvests of the crop -> {'status': 200, 'estimate': 1383.33, 'history': [1250, 1600, 1300], 'method': 'Moving Average (3 records)', 'ms': 12.0}
+[12:32:20] PASS FR-07 FR-07-02 Preview does not write -> 0
+[12:32:20] PASS FR-07 FR-07-03 Only harvests before the forecast date are used (2 available -> refused) -> 400 INSUFFICIENT_HISTORY
+[12:32:20] PASS FR-07 FR-07-04 Forecast date outside the season refused -> 400 DATE_OUTSIDE_SEASON
+[12:32:20] PASS FR-07 FR-07-05 Configurable window N=2 -> 1425.0
+[12:32:20] PASS FR-07 FR-07-06 Preview on REAL history of crop #1 equals an independent SQL computation -> 1583.33
+[12:32:20] PASS FR-07 FR-07-07 The documented method (SQL recomputation) reproduces every stored 'Moving Average (3 records)' forecast -> 7
+[12:32:20] PASS FR-08 FR-08-01 Generated forecast is persisted -> {'forecast_id': 259, 'crop_id': 785, 'season_id': 801, 'forecast_date': '2001-05-08', 'estimated_quantity': 1383.33, 'method': 'Moving Average (3 records)'}
+[12:32:20] PASS FR-08 FR-08-02 Retrieved forecast is Pending before any actual harvest -> Pending / None
+[12:32:20] PASS FR-08 FR-08-03 After the actual harvest the forecast is Evaluated with the correct absolute error -> {'status': 'Evaluated', 'actual': 1500, 'absolute_error': 116.67}
+[12:32:20] PASS FR-08 FR-08-04 vw_forecast_summary MAE/MAPE equal an independent computation from vw_forecast_status -> {'MAE': 83.34, 'MAPE': 5.45, 'total': 8}
+[12:32:20] PASS FR-09 FR-09-01 Invalid references refused by the API (Lot->Farm, Crop->Lot, Harvest->Season, Forecast->Crop, update Harvest->Crop) -> [400, 400, 400, 400, 400]
+[12:32:20] PASS FR-09 FR-09-02 Parents with dependants cannot be deleted (Farm, RoseVariety, Season, Crop) -> [409, 409, 409, 409]
+[12:32:20] PASS FR-09 FR-09-03 Database unchanged by refused operations -> {'Farm': 2, 'Lot': 5, 'RoseVariety': 11, 'Crop': 10, 'Season': 7, 'Harvest': 27, 'Forecast': 8}
+[12:32:20] PASS FR-02 FR-02-01 Lots are associated with their farm (farm detail lists them) -> [910, 911]
+[12:32:20] PASS FR-04 FR-04-01 A season cannot be shrunk so that its harvests fall outside it -> 409
+[12:32:20] PASS FR-01 FR-01-01 A second variety with the same name (any colour, any case) is refused (rule of 2026-11-23) -> 409 DUPLICATE_RECORD
+[12:32:20] --- duplicates
+[12:32:20] PASS DUP DUP-DB UNIQUE constraints present in the database -> ['unique_crop_forecast_date', 'unique_farm_name_location', 'unique_harvest_crop_date', 'unique_lot_farm_name', 'unique_season_name_dates']
+[12:32:20] PASS DUP DUP-01 Farm: exact and normalized duplicates refused, no row added -> ['409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 1 -> 1
+[12:32:20] PASS DUP DUP-01L Farm: legitimate similar record accepted -> 201
+[12:32:20] PASS DUP DUP-02 Lot: exact and normalized duplicates refused, no row added -> ['409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 1 -> 1
+[12:32:20] PASS DUP DUP-02L Lot: legitimate similar record accepted -> 201
+[12:32:20] PASS DUP DUP-03 RoseVariety: exact and normalized duplicates refused, no row added -> ['409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 1 -> 1
+[12:32:20] PASS DUP DUP-04 Crop: exact and normalized duplicates refused, no row added -> ['409 DUPLICATE_RECORD'], count 1 -> 1
+[12:32:20] PASS DUP DUP-04L Crop: legitimate similar record accepted -> 201
+[12:32:20] PASS DUP DUP-05 Season: exact and normalized duplicates refused, no row added -> ['409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 1 -> 1
+[12:32:20] PASS DUP DUP-05L Season: legitimate similar record accepted -> 201
+[12:32:20] PASS DUP DUP-06 Harvest: exact and normalized duplicates refused, no row added -> ['409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 1 -> 1
+[12:32:20] PASS DUP DUP-06L Harvest: legitimate similar record accepted -> 201
+[12:32:20] PASS DUP DUP-07 Forecast: exact and normalized duplicates refused, no row added -> ['409 DUPLICATE_RECORD'], count 1 -> 1
+[12:32:20] PASS DUP DUP-07L Forecast: legitimate similar record accepted -> 201
+[12:32:20] PASS DUP DUP-07G Forecast: saving a generated forecast for an existing crop/date is refused and does not overwrite it -> 409, stored 7.00
+[12:32:21] PASS DUP DUP-08 PUT keeping its own unique values is accepted; PUT to another record's values is refused -> 200, 409
+[12:32:21] PASS DUP DUP-R1 Farm: 8 identical concurrent POSTs create exactly one row -> ['201', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 0 -> 1
+[12:32:21] PASS DUP DUP-R2 Lot: 8 identical concurrent POSTs create exactly one row -> ['201', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 0 -> 1
+[12:32:21] PASS DUP DUP-R3 RoseVariety: 8 identical concurrent POSTs create exactly one row -> ['201', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 0 -> 1
+[12:32:21] PASS DUP DUP-R4 Crop: 8 identical concurrent POSTs create exactly one row -> ['201', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 2 -> 3
+[12:32:21] PASS DUP DUP-R5 Season: 8 identical concurrent POSTs create exactly one row -> ['201', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 0 -> 1
+[12:32:21] PASS DUP DUP-R6 Harvest: 8 identical concurrent POSTs create exactly one row -> ['201', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 2 -> 3
+[12:32:21] PASS DUP DUP-R7 Forecast: 8 identical concurrent POSTs create exactly one row -> ['201', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD', '409 DUPLICATE_RECORD'], count 2 -> 3
+[12:32:21] clean-up removed: {'Farm': 7, 'Lot': 6, 'RoseVariety': 8, 'Crop': 6, 'Season': 8, 'Harvest': 11, 'Forecast': 5}
+[12:32:21] PASS GUARD GUARD-01 Every pre-existing row unchanged and no audit row left behind -> no difference
+[12:32:21] PASS NFR-05 NFR-05-01 Schema unchanged after inserting and managing new varieties, lots, crops, seasons, harvests and forecasts -> d95f0393746d36784d6df18bc0e48d2f604e42f630cbe2b8a461b4f1f8f52b2e

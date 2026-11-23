@@ -1,0 +1,64 @@
+{
+  "source_database": "RoseProductionDB",
+  "restored_database": "RoseProductionDB_AuditRestore_20261122_104257",
+  "dump_file": "backups/audit_backup_20261122_104257.sql",
+  "dump_bytes": 28080,
+  "dump_sha256": "d5b5ce9c329bc18c5af127337d38a0177f631f570ede40749c4fd328162bec4a",
+  "dump_seconds": 0.18,
+  "restore_seconds": 0.683,
+  "source": {
+    "tables": 7,
+    "views": 2,
+    "triggers": 4,
+    "routines": 6,
+    "row_counts": {
+      "Farm": 1,
+      "Lot": 3,
+      "RoseVariety": 7,
+      "Crop": 8,
+      "Season": 3,
+      "Harvest": 20,
+      "Forecast": 8
+    },
+    "total_rows": 50
+  },
+  "restored": {
+    "tables": 7,
+    "views": 2,
+    "triggers": 4,
+    "routines": 6,
+    "row_counts": {
+      "Farm": 1,
+      "Lot": 3,
+      "RoseVariety": 7,
+      "Crop": 8,
+      "Season": 3,
+      "Harvest": 20,
+      "Forecast": 8
+    },
+    "total_rows": 50
+  },
+  "structure_equal": {
+    "tables": true,
+    "views": true,
+    "triggers": true,
+    "routines": true,
+    "constraints": true,
+    "indexes": true,
+    "columns": true
+  },
+  "table_data_equal": {
+    "Farm": true,
+    "Lot": true,
+    "RoseVariety": true,
+    "Crop": true,
+    "Season": true,
+    "Harvest": true,
+    "Forecast": true
+  },
+  "view_results_equal": {
+    "vw_forecast_status": true,
+    "vw_forecast_summary": true
+  },
+  "result": "PASS"
+}

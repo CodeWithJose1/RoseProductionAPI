@@ -1,0 +1,64 @@
+{
+ "database": "replica RoseProductionDB (cloud workspace, loaded from the 2026-11-22 09:02 backup; 7 forecasts)",
+ "run_at": "2026-11-22T11:13:51.973118-05:00",
+ "procedure": "BEGIN; INSERT a second harvest for crop 1 on 2026-02-09 (date of forecast 1, which is already evaluated by harvest 1600) with quantity 100; read both views; ROLLBACK",
+ "before": {
+  "rows_for_forecast_1": [
+   {
+    "forecast_id": 1,
+    "actual_quantity": 1600,
+    "absolute_error": "50.00"
+   }
+  ],
+  "summary": [
+   {
+    "total_forecasts": 7,
+    "evaluated_forecasts": "1",
+    "pending_forecasts": "6",
+    "MAE": "50.00",
+    "MAPE": "3.13"
+   }
+  ]
+ },
+ "after_insert": {
+  "rows_for_forecast_1": [
+   {
+    "forecast_id": 1,
+    "actual_quantity": 1600,
+    "absolute_error": "50.00"
+   },
+   {
+    "forecast_id": 1,
+    "actual_quantity": 100,
+    "absolute_error": "1450.00"
+   }
+  ],
+  "summary": [
+   {
+    "total_forecasts": 8,
+    "evaluated_forecasts": "2",
+    "pending_forecasts": "6",
+    "MAE": "750.00",
+    "MAPE": "726.56"
+   }
+  ]
+ },
+ "after_rollback": {
+  "rows_for_forecast_1": [
+   {
+    "forecast_id": 1,
+    "actual_quantity": 1600,
+    "absolute_error": "50.00"
+   }
+  ],
+  "summary": [
+   {
+    "total_forecasts": 7,
+    "evaluated_forecasts": "1",
+    "pending_forecasts": "6",
+    "MAE": "50.00",
+    "MAPE": "3.13"
+   }
+  ]
+ }
+}

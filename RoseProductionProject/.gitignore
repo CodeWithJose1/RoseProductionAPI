@@ -1,0 +1,16 @@
+.venv/
+.env
+__pycache__/
+*.pyc
+
+# Database backups contain production data
+backups/
+
+# Front-end
+frontend/node_modules/
+frontend/test-results/
+frontend/playwright-report/
+frontend/.vite/
+
+# Test / tooling caches
+.pytest_cache/

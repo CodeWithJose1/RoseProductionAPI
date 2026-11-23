@@ -1,0 +1,40 @@
+Frontend tests and production build executed on the user's machine (nobara-pc,
+desktop-app Linux VM, Node v22.23.2) on 2026-11-22, each time on a fresh copy of
+the delivered frontend/ sources (node_modules, dist, test-results excluded) in a
+scratch folder outside the project.
+
+=== Run 2 (final; bundle index-CLqLDtTO.js, after the empty-state correction) ===
+$ npm ci --no-audit --no-fund                      [2026-11-22T16:05:30Z]
+added 189 packages in 3s                                          exit=0
+$ npx vitest run                                   [2026-11-22T16:05:33Z]
+Test Files  5 passed (5)
+Tests       60 passed (60)                                        exit=0
+$ npx vite build                                   [2026-11-22T16:05:45Z]
+dist/index.html                   0.60 kB
+dist/assets/index-CL6YbocT.css   16.80 kB
+dist/assets/index-CLqLDtTO.js   807.84 kB
+built in 3.80s                                                    exit=0
+Comparison with the shipped frontend/dist: index.html, index-CL6YbocT.css,
+index-CLqLDtTO.js and favicon.svg are byte-for-byte identical (reproducible build).
+$ npm audit --omit=dev   [2026-11-22T16:05:49Z]  -> found 0 vulnerabilities
+$ npm audit                                      -> found 0 vulnerabilities
+
+Secret scan of the whole project folder on nobara-pc [2026-11-22T16:05:26Z]
+(same logic as step 11 of scripts/audit/run_host_audit.sh; values read from .env,
+never printed): variables checked API_KEY, DB_PASSWORD; files scanned 170;
+secret values found outside .env: none; exit=0.
+
+=== Run 1 (before the empty-state correction; bundle index-BPdQZV91.js) ===
+$ npm ci --no-audit --no-fund                      [2026-11-22T15:41:45Z]
+added 189 packages in 5s                                          exit=0
+$ npx vitest run                                   [2026-11-22T15:41:53Z]
+Test Files  5 passed (5)
+Tests       59 passed (59)                                        exit=0
+$ npx vite build                                   [2026-11-22T15:42:05Z]
+dist/assets/index-BPdQZV91.js   807.61 kB                         exit=0
+byte-for-byte identical to the dist shipped at that time.
+
+Not executable there: Playwright end-to-end tests (the VM cannot reach the API
+on the host's 127.0.0.1:7003). The real-system GUI workflows were executed in
+the desktop app's browser pane instead (GUI_INTEGRATION_TEST_REPORT.md,
+evidence/gui_real_system_run.json).

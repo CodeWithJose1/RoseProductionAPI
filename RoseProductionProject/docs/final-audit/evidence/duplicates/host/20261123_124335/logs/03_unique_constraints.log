@@ -1,0 +1,6 @@
+TABLE_NAME	CONSTRAINT_NAME
+Farm	unique_farm_name_location
+Forecast	unique_crop_forecast_date
+Harvest	unique_harvest_crop_date
+Lot	unique_lot_farm_name
+Season	unique_season_name_dates

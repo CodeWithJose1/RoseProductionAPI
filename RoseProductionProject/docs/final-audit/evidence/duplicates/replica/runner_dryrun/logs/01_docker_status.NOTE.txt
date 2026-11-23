@@ -1,0 +1,1 @@
+01_docker_status: not available in the cloud replica (docker shim supports only "exec"); expected.

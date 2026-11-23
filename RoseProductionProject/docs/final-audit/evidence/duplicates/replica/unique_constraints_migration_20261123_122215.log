@@ -1,0 +1,37 @@
+== 2026-11-23T12:22:15-05:00 migration 2026-11-23 on database RoseProductionDB
+== 1. backup -> backups/before_unique_constraints_20261123_122215.sql
+backup bytes: 28193  sha256: 6dffe38fdc01b6e43ba36dec2d4808947449778c7dc2fb2d203a580f98e58310
+== 2. row counts before
+Farm	1
+Lot	3
+RoseVariety	7
+Crop	8
+Season	3
+Harvest	20
+Forecast	7
+== 3. duplicate pre-check (groups that would violate each new constraint)
+unique_farm_name_location: 0 duplicate group(s)
+unique_lot_farm_name: 0 duplicate group(s)
+unique_season_name_dates: 0 duplicate group(s)
+unique_harvest_crop_date: 0 duplicate group(s)
+== 4. add constraints
+unique_farm_name_location: added
+unique_lot_farm_name: added
+unique_season_name_dates: added
+unique_harvest_crop_date: added
+== 5. verification
+Farm	unique_farm_name_location
+Forecast	unique_crop_forecast_date
+Harvest	unique_harvest_crop_date
+Lot	unique_lot_farm_name
+Season	unique_season_name_dates
+row counts after:
+Farm	1
+Lot	3
+RoseVariety	7
+Crop	8
+Season	3
+Harvest	20
+Forecast	7
+row counts unchanged
+== done 2026-11-23T12:22:16-05:00. Backup kept in backups/before_unique_constraints_20261123_122215.sql

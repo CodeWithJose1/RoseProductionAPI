@@ -1,0 +1,15 @@
+axe-core 4.14.1 (WCAG 2.0/2.1 A+AA rules) on the replica, BEFORE the colour fix
+(run 2026-11-22, frontend build of the delivered version):
+login []
+dashboard [('color-contrast', 'serious', 2, ['.status-pill', '.badge-success'])]
+analytics [('color-contrast', 'serious', 1, ['.status-pill'])]
+farms [('color-contrast', 'serious', 1, ['.status-pill'])]
+lots [('color-contrast', 'serious', 1, ['.status-pill'])]
+varieties [('color-contrast', 'serious', 1, ['.status-pill'])]
+crops [('color-contrast', 'serious', 1, ['.status-pill'])]
+seasons [('color-contrast', 'serious', 2, ['.status-pill', '.badge-success'])]
+harvests [('color-contrast', 'serious', 1, ['.status-pill'])]
+forecasts [('color-contrast', 'serious', 2, ['.status-pill', '.badge-success'])]
+harvest-form-with-errors [('color-contrast', 'serious', 1, ['.status-pill'])]
+Fix: --success #15803d -> #166534 (frontend/src/styles.css). After the fix: 0 violations on all 11 views
+(see accessibility_axe_replica.json).

@@ -1,0 +1,203 @@
+{
+ "database": "RoseProductionDB",
+ "run_at": "2026-11-23T12:43:36.535387-05:00",
+ "read_only": true,
+ "checks": {
+  "Farm: same name and location": [],
+  "Farm: same name (different location)": [],
+  "Lot: same name inside the same farm": [],
+  "RoseVariety: same name and color": [
+   {
+    "name_key": "quicksand",
+    "color_key": "peach",
+    "n": 2,
+    "ids": "6,7",
+    "raw_values": "[Quicksand | Peach] [Quicksand | Peach]"
+   }
+  ],
+  "RoseVariety: same name (any color)": [
+   {
+    "name_key": "quicksand",
+    "n": 2,
+    "ids": "6,7",
+    "colors": "Peach"
+   }
+  ],
+  "Crop: same lot, variety and planting date": [
+   {
+    "lot_id": 3,
+    "variety_id": 6,
+    "planting_date": "2026-11-15",
+    "n": 2,
+    "ids": "7,8"
+   }
+  ],
+  "Crop: same lot and variety (different planting dates)": [
+   {
+    "lot_id": 3,
+    "variety_id": 6,
+    "n": 2,
+    "ids": "7,8",
+    "planting_dates": "2026-11-15,2026-11-15"
+   }
+  ],
+  "Season: same name": [],
+  "Season: same name with overlapping dates": [],
+  "Season: same date range (any name)": [],
+  "Harvest: same crop and day": [],
+  "Harvest: same crop, day and quantity": [],
+  "Harvest: same day and quantity on different crops (informative)": [],
+  "Forecast: same crop and date": [],
+  "Forecast: same crop, season, estimate and method on different dates (informative)": []
+ },
+ "row_counts": {
+  "Farm": 2,
+  "Lot": 6,
+  "RoseVariety": 7,
+  "Crop": 8,
+  "Season": 5,
+  "Harvest": 22,
+  "Forecast": 8
+ },
+ "indexes": [
+  {
+   "TABLE_NAME": "Crop",
+   "INDEX_NAME": "lot_id",
+   "NON_UNIQUE": 1,
+   "columns": "lot_id"
+  },
+  {
+   "TABLE_NAME": "Crop",
+   "INDEX_NAME": "PRIMARY",
+   "NON_UNIQUE": 0,
+   "columns": "crop_id"
+  },
+  {
+   "TABLE_NAME": "Crop",
+   "INDEX_NAME": "variety_id",
+   "NON_UNIQUE": 1,
+   "columns": "variety_id"
+  },
+  {
+   "TABLE_NAME": "Farm",
+   "INDEX_NAME": "PRIMARY",
+   "NON_UNIQUE": 0,
+   "columns": "farm_id"
+  },
+  {
+   "TABLE_NAME": "Farm",
+   "INDEX_NAME": "unique_farm_name_location",
+   "NON_UNIQUE": 0,
+   "columns": "name,location"
+  },
+  {
+   "TABLE_NAME": "Forecast",
+   "INDEX_NAME": "PRIMARY",
+   "NON_UNIQUE": 0,
+   "columns": "forecast_id"
+  },
+  {
+   "TABLE_NAME": "Forecast",
+   "INDEX_NAME": "season_id",
+   "NON_UNIQUE": 1,
+   "columns": "season_id"
+  },
+  {
+   "TABLE_NAME": "Forecast",
+   "INDEX_NAME": "unique_crop_forecast_date",
+   "NON_UNIQUE": 0,
+   "columns": "crop_id,forecast_date"
+  },
+  {
+   "TABLE_NAME": "Harvest",
+   "INDEX_NAME": "idx_harvest_crop_date",
+   "NON_UNIQUE": 1,
+   "columns": "crop_id,harvest_date"
+  },
+  {
+   "TABLE_NAME": "Harvest",
+   "INDEX_NAME": "PRIMARY",
+   "NON_UNIQUE": 0,
+   "columns": "harvest_id"
+  },
+  {
+   "TABLE_NAME": "Harvest",
+   "INDEX_NAME": "season_id",
+   "NON_UNIQUE": 1,
+   "columns": "season_id"
+  },
+  {
+   "TABLE_NAME": "Harvest",
+   "INDEX_NAME": "unique_harvest_crop_date",
+   "NON_UNIQUE": 0,
+   "columns": "crop_id,harvest_date"
+  },
+  {
+   "TABLE_NAME": "Lot",
+   "INDEX_NAME": "PRIMARY",
+   "NON_UNIQUE": 0,
+   "columns": "lot_id"
+  },
+  {
+   "TABLE_NAME": "Lot",
+   "INDEX_NAME": "unique_lot_farm_name",
+   "NON_UNIQUE": 0,
+   "columns": "farm_id,name"
+  },
+  {
+   "TABLE_NAME": "RoseVariety",
+   "INDEX_NAME": "PRIMARY",
+   "NON_UNIQUE": 0,
+   "columns": "variety_id"
+  },
+  {
+   "TABLE_NAME": "Season",
+   "INDEX_NAME": "PRIMARY",
+   "NON_UNIQUE": 0,
+   "columns": "season_id"
+  },
+  {
+   "TABLE_NAME": "Season",
+   "INDEX_NAME": "unique_season_name_dates",
+   "NON_UNIQUE": 0,
+   "columns": "name,start_date,end_date"
+  }
+ ],
+ "text_collations": [
+  {
+   "TABLE_NAME": "Farm",
+   "COLUMN_NAME": "location",
+   "COLLATION_NAME": "utf8mb4_unicode_ci"
+  },
+  {
+   "TABLE_NAME": "Farm",
+   "COLUMN_NAME": "name",
+   "COLLATION_NAME": "utf8mb4_unicode_ci"
+  },
+  {
+   "TABLE_NAME": "Forecast",
+   "COLUMN_NAME": "method",
+   "COLLATION_NAME": "utf8mb4_unicode_ci"
+  },
+  {
+   "TABLE_NAME": "Lot",
+   "COLUMN_NAME": "name",
+   "COLLATION_NAME": "utf8mb4_unicode_ci"
+  },
+  {
+   "TABLE_NAME": "RoseVariety",
+   "COLUMN_NAME": "color",
+   "COLLATION_NAME": "utf8mb4_unicode_ci"
+  },
+  {
+   "TABLE_NAME": "RoseVariety",
+   "COLUMN_NAME": "name",
+   "COLLATION_NAME": "utf8mb4_unicode_ci"
+  },
+  {
+   "TABLE_NAME": "Season",
+   "COLUMN_NAME": "name",
+   "COLLATION_NAME": "utf8mb4_unicode_ci"
+  }
+ ]
+}

@@ -1,0 +1,71 @@
+{
+ "description": "Same requests sent twice (and a case/space variant) to the API, against a copy of the database WITHOUT the new UNIQUE constraints, so the result shows what the API itself does. before = code in the user folder on 2026-11-23 (API 1.1.0); after = fixed code (API 1.2.0). Run in the cloud replica.",
+ "before_api_1_1_0": {
+  "farm": [
+   "201",
+   "201",
+   "201"
+  ],
+  "lot": [
+   "201",
+   "201",
+   "201"
+  ],
+  "variety": [
+   "201",
+   "201",
+   "201"
+  ],
+  "crop": [
+   "201",
+   "201"
+  ],
+  "season": [
+   "201",
+   "201",
+   "201"
+  ],
+  "harvest": [
+   "201",
+   "409 DUPLICATE_RECORD"
+  ],
+  "forecast": [
+   "201",
+   "409 DUPLICATE_RECORD"
+  ]
+ },
+ "after_api_1_2_0": {
+  "farm": [
+   "201",
+   "409 DUPLICATE_RECORD",
+   "409 DUPLICATE_RECORD"
+  ],
+  "lot": [
+   "201",
+   "409 DUPLICATE_RECORD",
+   "409 DUPLICATE_RECORD"
+  ],
+  "variety": [
+   "201",
+   "409 DUPLICATE_RECORD",
+   "409 DUPLICATE_RECORD"
+  ],
+  "crop": [
+   "201",
+   "409 DUPLICATE_RECORD"
+  ],
+  "season": [
+   "201",
+   "409 DUPLICATE_RECORD",
+   "409 DUPLICATE_RECORD"
+  ],
+  "harvest": [
+   "201",
+   "409 DUPLICATE_RECORD"
+  ],
+  "forecast": [
+   "201",
+   "409 DUPLICATE_RECORD"
+  ]
+ }
+}

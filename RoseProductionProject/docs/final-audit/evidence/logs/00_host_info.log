@@ -1,0 +1,8 @@
+Linux nobara-pc 7.3.4-202.nobara.fc44.x86_64 #1 SMP PREEMPT_DYNAMIC Mon Nov 16 07:20:23 UTC 2026 x86_64 GNU/Linux
+NAME="Nobara Linux"
+VERSION="44"
+ID=nobara
+Python 3.14.8
+/home/jose/Documentos/DockerMySQL/RoseProductionAPI/.venv/bin/python
+2026-11-22T10:42:49-05:00
+nobara-pc
